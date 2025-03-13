@@ -1,4 +1,4 @@
-#include<iostream>
+#include<bits/stdc++.h>
 using namespace std;
 int main(){
     int t;
@@ -6,15 +6,25 @@ int main(){
     while(t--){
         int n;
         cin>>n;
-        cout<<2*n-1<<endl;
         int x;
         cin>>x;
-        cout<<x<<" ";
-        int y;
+        int y=x;
+        vector<int>ans;
+        ans.push_back(y);
         for(int i=1;i<n;i++){
-            cin>>y;
-            cout<<min(x,y)-1<<" "<<y<<" ";
-            x=y;
+            cin>>x;
+            if(x>=y){
+                ans.push_back(x);
+            }
+            else{
+                ans.push_back(x);
+                ans.push_back(x);
+            }
+            y=x;
+        }
+        cout<<ans.size()<<endl;
+        for(int i=0;i<ans.size();i++){
+            cout<<ans[i]<<" ";
         }
         cout<<endl;
     }
