@@ -7,15 +7,9 @@ int main(){
         int n;
         cin>>n;
         vector<int>ans(n);
-        cin>>ans[0];
-        for(int i=1;i<n;i++){
-            cin>>ans[i];
-            if(ans[i]<ans[i-1]){
-                swap(ans[i],ans[i-1]);
-            }
-        }
         for(int i=0;i<n;i++){
-            cout<<ans[i]<<" ";
+            cin>>ans[i];
+            cout<<n-ans[i]+1<<" ";
         }
         cout<<endl;
 
