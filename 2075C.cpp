@@ -13,6 +13,8 @@ int main(){
         for(int i=0;i<m;i++){
             a[i]=min(a[i],n-1);
         }
+
+
         sort(a.begin(),a.end());
         long long finalAnswer=0;
         for(int i=0;i<m;i++){
