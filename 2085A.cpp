@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 00:06:07 23-03-2025
+    created: 23:57:55 22-03-2025
 */
 
 
@@ -25,21 +25,44 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n;
-    cin>>n;
-    int count=1;
-    for(int i=2;i<=n;i++){
-        if(n%i==0){
-            count++;
+    int n,k;
+    cin>>n>>k;
+    string s;
+    cin>>s;
+    if(n==1){
+        cout<<"NO";
+        return;
+    }
+    int i=0;
+    int j=n-1;
+    unordered_map<char,int>mpp;
+    while(i<=j){
+        if(s[i]<s[j]){
+            cout<<"YES";
+            return;
+        }
+        else if(s[i]>s[j]){
+            if(k==0){
+                cout<<"NO";
+                return;
+            }
+            cout<<"YES";
+            return;
+
         }
         else{
-            break;
+            mpp[s[i]]++;
+            mpp[s[j]]++;
+            i++;
+            j--;
         }
     }
-    cout<<count;
-
-
-
+    if(mpp.size()>1 && k>0){
+        cout<<"YES";
+    }
+    else{
+        cout<<"NO";
+    }
 }
 
 signed main(){

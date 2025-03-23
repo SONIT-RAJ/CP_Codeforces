@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 00:05:58 23-03-2025
+    created: 18:08:40 23-03-2025
 */
 
 
@@ -23,11 +23,36 @@ const ll inf = 2e18 + 5;
 const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
+void ans(int n,vector<int>&a){
+    int l,r,k;
+    cin>>l>>r>>k;
+    int diff=(r==1)?a[0]:a[r-1];
+    int add=(l==1)?0:a[l-2];;
+    int sum=a[n-1]-diff+add;
+    sum+=(k*(r-l+1));
+    if(sum%2==1){
+        cout<<"YES";
+    }
+    else{
+        cout<<"NO";
+    }
+}
+
 void solve(){
 
-    int n;
-    cin>>n;
-
+    int n,q;
+    cin>>n>>q;
+    vector<int>a(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        if(i!=0){
+            a[i]+=a[i-1];
+        }
+    }
+    while(q--){
+        ans(n,a);
+        cout<<endl;
+    }
 
 
 
@@ -40,6 +65,5 @@ signed main(){
     cin>>t;
     while(t--){
         solve();
-        cout<<"\n";
     }
 }

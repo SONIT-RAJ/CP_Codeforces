@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 00:05:58 23-03-2025
+    created: 12:38:01 23-03-2025
 */
 
 
@@ -27,7 +27,16 @@ void solve(){
 
     int n;
     cin>>n;
+    vector<int>a(n);
+    int ans=0;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        if(a[i]!=i+1){
+            ans=__gcd(ans,abs(a[i]-i-1));
+        }
+    }
 
+    cout<<ans;
 
 
 

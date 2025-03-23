@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 00:05:58 23-03-2025
+    created: 18:53:43 23-03-2025
 */
 
 
@@ -25,8 +25,27 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n;
-    cin>>n;
+    int n,k;
+    cin>>n>>k;
+    vector<int>a(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    sort(a.begin(),a.end());
+    int count=1;
+    int maximum=1;
+    for(int i=1;i<n;i++){
+        if(abs(a[i]-a[i-1])>k){
+            count=1;
+        }
+        else{
+            count++;
+            if(maximum<count){
+                maximum=count;
+            }
+        }
+    }
+    cout<<n-maximum;
 
 
 

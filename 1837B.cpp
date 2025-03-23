@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 00:05:58 23-03-2025
+    created: 18:31:14 23-03-2025
 */
 
 
@@ -27,7 +27,22 @@ void solve(){
 
     int n;
     cin>>n;
-
+    string s;
+    cin>>s;
+    int count=2;
+    int maximum=2;
+    for(int i=1;i<n;i++){
+        if(s[i]==s[i-1]){
+            count++;
+            if(maximum<count){
+                maximum=count;
+            }
+        }
+        else{
+            count=2;
+        }
+    }
+    cout<<maximum;
 
 
 
