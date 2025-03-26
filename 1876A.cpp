@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 11:00:16 24-03-2025
+    created: 14:36:45 24-03-2025
 */
 
 
@@ -25,51 +25,34 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n;
-    cin>>n;
-    string a,b;
-    cin>>a>>b;
-    if(a==b){
-        cout<<"YES";
-        return;
+    int n,p;
+    cin>>n>>p;
+    vector<vector<int>>a(n,vector<int>(2,0));
+    for(int i=0;i<2;i++){
+        for(int j=0;j<n;j++){
+            cin>>a[j][i];
+        }
     }
-    if(a.size()==1){
-        cout<<"NO";
-        return;
-    }
-    int c0=0;
-    int c1=0;
-    int flag=0;
+    sort(a.begin(), a.end(), [](const vector<int> &x, const vector<int> &y) {
+        return x[1] < y[1]; // Sort by second element in ascending order
+    });
+    int t=n-1;
+    int ans=p;
     for(int i=0;i<n;i++){
-        if(a[i]==b[i]){
-            if(flag){
-                cout<<"NO";
-                return;
-            }
+        if(a[i][1]<p){
+            ans+=a[i][1]*(min(a[i][0],t));
+            t-=(min(a[i][0],t));
         }
         else{
-            if((flag==0) &&( c0!=c1)){
-                cout<<"NO";
-                return;
-            }
-            flag=1;
+            break;
         }
-        if(a[i]=='0'){
-            c0++;
-        }
-        else{
-            c1++;
-        }
-        if(c0==c1){
-            flag=0;
+        if(t==0){
+            break;
         }
     }
-    if(flag==0){
-        cout<<"YES";
-    }
-    else{
-        cout<<"NO";
-    }
+    ans+=p*(t);
+    cout<<ans;
+
 
 
 }

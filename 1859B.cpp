@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 11:00:16 24-03-2025
+    created: 14:56:00 24-03-2025
 */
 
 
@@ -27,49 +27,27 @@ void solve(){
 
     int n;
     cin>>n;
-    string a,b;
-    cin>>a>>b;
-    if(a==b){
-        cout<<"YES";
-        return;
-    }
-    if(a.size()==1){
-        cout<<"NO";
-        return;
-    }
-    int c0=0;
-    int c1=0;
-    int flag=0;
+    vector<int>a;
+    vector<int>c;
     for(int i=0;i<n;i++){
-        if(a[i]==b[i]){
-            if(flag){
-                cout<<"NO";
-                return;
-            }
+        int m;
+        cin>>m;
+        vector<int>b(m);
+        for(int j=0;j<m;j++){
+            cin>>b[j];
         }
-        else{
-            if((flag==0) &&( c0!=c1)){
-                cout<<"NO";
-                return;
-            }
-            flag=1;
-        }
-        if(a[i]=='0'){
-            c0++;
-        }
-        else{
-            c1++;
-        }
-        if(c0==c1){
-            flag=0;
-        }
+        sort(b.begin(),b.end());
+        a.push_back(b[0]);
+        c.push_back(b[1]);
     }
-    if(flag==0){
-        cout<<"YES";
+    sort(a.begin(),a.end());
+    sort(c.begin(),c.end());
+    int sum=a[0];
+    for(int i=1;i<c.size();i++){
+        sum+=c[i];
     }
-    else{
-        cout<<"NO";
-    }
+    cout<<sum;
+
 
 
 }

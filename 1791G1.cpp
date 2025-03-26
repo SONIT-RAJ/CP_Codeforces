@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 11:00:16 24-03-2025
+    created: 19:24:40 25-03-2025
 */
 
 
@@ -25,51 +25,28 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n;
-    cin>>n;
-    string a,b;
-    cin>>a>>b;
-    if(a==b){
-        cout<<"YES";
-        return;
-    }
-    if(a.size()==1){
-        cout<<"NO";
-        return;
-    }
-    int c0=0;
-    int c1=0;
-    int flag=0;
+    int n,c;
+    cin>>n>>c;
+    vector<int>a(n);
     for(int i=0;i<n;i++){
-        if(a[i]==b[i]){
-            if(flag){
-                cout<<"NO";
-                return;
-            }
+        cin>>a[i];
+        a[i]+=i+1;
+    }
+    sort(all(a));
+    int count=0;
+    int sum=0;
+    for(int i=0;i<n;i++){
+        sum+=a[i];
+        if(sum<=c){
+            count++;
         }
         else{
-            if((flag==0) &&( c0!=c1)){
-                cout<<"NO";
-                return;
-            }
-            flag=1;
-        }
-        if(a[i]=='0'){
-            c0++;
-        }
-        else{
-            c1++;
-        }
-        if(c0==c1){
-            flag=0;
+            break;
         }
     }
-    if(flag==0){
-        cout<<"YES";
-    }
-    else{
-        cout<<"NO";
-    }
+    cout<<count;
+
+
 
 
 }
