@@ -25,22 +25,39 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n,k,b,s;
-    cin>>n>>k>>b>>s;
-    if(b>(s/k)){
-        cout<<-1;
-        return;
+    int x,y;
+    cin>>x>>y;
+    int k1;
+    cin>>k1;
+    vector<int>a1(k1);
+    for(int i=0;i<k1;i++){
+        cin>>a1[i];
     }
-    else if(b==(s/k)){
-        for(int i=1;i<n;i++){
-            cout<<0<<" ";
-        }
-        cout<<s;
-        return;
+    int k2;
+    cin>>k2;
+    vector<int>a2(k2);
+    for(int i=0;i<k2;i++){
+        cin>>a2[i];
     }
-    else{
-
+    int k3;
+    cin>>k3;
+    vector<int>a3(k3);
+    for(int i=0;i<k3;i++){
+        cin>>a3[i];
     }
+    int k4;
+    cin>>k4;
+    vector<int>a4(k4);
+    for(int i=0;i<k4;i++){
+        cin>>a4[i];
+    }
+    sort(a1.begin(),a1.end());
+    sort(a2.begin(),a2.end());
+    sort(a3.begin(),a3.end());
+    sort(a4.begin(),a4.end());
+    int maximum1=max(y*(a1[k1-1]-a1[0]),y*(a2[k2-1]-a2[0]));
+    int maximum2=max(x*(a3[k3-1]-a3[0]),x*(a4[k4-1]-a4[0]));
+    cout<<max(maximum1,maximum2);
 
 
 
