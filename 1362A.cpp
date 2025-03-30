@@ -26,7 +26,7 @@ const ll M = 1e9 + 7;
 int firstSetBitFromLeft(int n) {
     if (n == 0) return 0; // No set bits
 
-    int pos = 63 - __builtin_clzll(n); // Find MSB position (0-based)  (very important)
+    int pos = 63 - __builtin_clzll(n); // Find MSB position (0-based)  (very important ,should learn this)
     return (pos);
 }
 
