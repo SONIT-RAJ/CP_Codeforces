@@ -1,14 +1,14 @@
 /*
    Author: SONIT RAJ
-    created: 22:37:49 28-03-2025
+    created: 21:33:40 30-03-2025
 */
 
 
 #include<bits/stdc++.h>
 using namespace std;
 
-#pragma GCC optimize("Ofast,unroll-loops") 
-#pragma GCC target("avx,avx2,fma") 
+#pragma GCC optimize("Ofast,unroll-loops")
+#pragma GCC target("avx,avx2,fma")
 
 #define ll long long
 #define int long long
@@ -27,7 +27,27 @@ void solve(){
 
     int n;
     cin>>n;
-    
+    string s;
+    cin>>s;
+    vector<int>a;
+    int count=0;
+    for(int i=0;i<s.size();i++){
+        if(s[i]=='('){
+            a.push_back(s[i]);
+        }
+        else{
+            if(a.empty()){
+                a.push_back(s[i]);
+            }
+            else if(a.back()==')'){
+                a.push_back(s[i]);
+            }
+            else{
+                a.pop_back();
+            }
+        }
+    }
+    cout<<a.size()/2;
 
 
 
