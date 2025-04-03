@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 22:10:58 30-03-2025
+    created: 12:13:38 03-04-2025
 */
 
 
@@ -27,25 +27,28 @@ void solve(){
 
     int n;
     cin>>n;
-    vector<int>a(n);
-    unordered_map<int,int>mpp;
-    int flag=0;
+    unordered_map<int,int>mpp1;
+    unordered_map<int,int>mpp2;
+    string s;
+    cin>>s;
     for(int i=0;i<n;i++){
-        cin>>a[i];
-        if(mpp[a[i]]){
-            flag=1;
+        mpp1[s[i]]++;
+    }
+    int m=mpp1.size();
+    int maximum=m;
+    int count=m;
+    for(int i=0;i<n-1;i++){
+        if(mpp2[s[i]]==0){
+            count++;
         }
-        else{
-            mpp[a[i]]++;
+        mpp2[s[i]]++;
+        mpp1[s[i]]--;
+        if(mpp1[s[i]]==0){
+            count--;
         }
+        maximum=max(maximum,count);
     }
-    if(flag){
-        cout<<"YES";
-    }
-    else{
-        cout<<"NO";
-    }
-
+    cout<<maximum;
 
 
 
