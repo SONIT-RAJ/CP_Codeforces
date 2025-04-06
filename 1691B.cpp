@@ -7,8 +7,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#pragma GCC optimize("Ofast,unroll-loops") 
-#pragma GCC target("avx,avx2,fma") 
+#pragma GCC optimize("Ofast,unroll-loops")
+#pragma GCC target("avx,avx2,fma")
 
 #define ll long long
 #define int long long
@@ -27,7 +27,32 @@ void solve(){
 
     int n;
     cin>>n;
-    
+    vector<int>a(n);
+    unordered_map<int,int>mpp;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        mpp[a[i]]++;
+    }
+    vector<int>ans;
+    int count=0;
+    for(int i=0;i<n;){
+        if(mpp[a[i]]==1){
+            cout<<-1;
+            return;
+        }
+        else{
+            ans.push_back(count+mpp[a[i]]);
+            for(int k=1;k<mpp[a[i]];k++){
+                ans.push_back(count+k);
+            }
+            count+=mpp[a[i]];
+            i+=mpp[a[i]];
+        }
+    }
+    for(int i=0;i<n;i++){
+        cout<<ans[i]<<" ";
+    }
+
 
 
 
