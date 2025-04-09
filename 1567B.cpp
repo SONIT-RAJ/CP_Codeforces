@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 12:29:15 27-03-2025
+    created: 21:38:47 09-04-2025
 */
 
 
@@ -23,27 +23,33 @@ const ll inf = 2e18 + 5;
 const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
-int fair(int n){
-    int t=n;
-    while(t!=0){
-        if(t%10==0){
-            t/=10;
-        }
-        else if(n%(t%10)!=0){
-            return fair(n+1);
-        }
-        else{
-            t/=10;
-        }
-    }
-    return n;
-}
-
 void solve(){
 
-    int n;
-    cin>>n;
-    cout<<fair(n);
+    int a,b;
+    cin>>a>>b;
+    int x;
+    if((a-1)%4==0){
+        x=a-1;
+    }
+    else if((a-1)%4==1){
+        x=1;
+    }
+    else if((a-1)%4==2){
+        x=a;
+    }
+    else if((a-1)%4==3){
+        x=0;
+    }
+    if(x==b){
+        cout<<a;
+    }
+    else if((b^x)!=a){
+        cout<<a+1;
+    }
+    else{
+        cout<<a+2;
+    }
+
 
 
 

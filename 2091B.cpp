@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 12:29:15 27-03-2025
+    created: 12:46:56 08-04-2025
 */
 
 
@@ -23,27 +23,28 @@ const ll inf = 2e18 + 5;
 const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
-int fair(int n){
-    int t=n;
-    while(t!=0){
-        if(t%10==0){
-            t/=10;
-        }
-        else if(n%(t%10)!=0){
-            return fair(n+1);
-        }
-        else{
-            t/=10;
-        }
-    }
-    return n;
-}
-
 void solve(){
 
-    int n;
-    cin>>n;
-    cout<<fair(n);
+    int n,x;
+    cin>>n>>x;
+    vector<int>a(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    sort(a.begin(),a.end(),greater<int>());
+    int count=1;
+    int ans=0;
+    for(int i=0;i<n;i++){
+        if(a[i]*count>=x){
+            ans++;
+            count=1;
+        }
+        else{
+            count++;
+        }
+    }
+    cout<<ans;
+
 
 
 

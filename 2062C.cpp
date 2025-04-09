@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 12:29:15 27-03-2025
+    created: 20:30:31 09-04-2025
 */
 
 
@@ -23,27 +23,24 @@ const ll inf = 2e18 + 5;
 const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
-int fair(int n){
-    int t=n;
-    while(t!=0){
-        if(t%10==0){
-            t/=10;
-        }
-        else if(n%(t%10)!=0){
-            return fair(n+1);
-        }
-        else{
-            t/=10;
-        }
-    }
-    return n;
-}
-
 void solve(){
 
     int n;
     cin>>n;
-    cout<<fair(n);
+    vector<int>a(n);
+    int sum=0;
+    int maximum=INT_MIN;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        sum+=a[i];
+    }
+    maximum=max(maximum,sum);
+    reverse(a.begin(),a.end());
+    sum=0;
+    for(int i=1;i<a.size();i++){
+        b.push_back(a[i]-a[i-1]);
+        sum+=b.back();
+    }
 
 
 
