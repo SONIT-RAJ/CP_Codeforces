@@ -34,14 +34,18 @@ void solve(){
         sum+=a[i];
     }
     sort(a.begin(),a.end());
-    int front=0;
-    int back=0;
-    int alternate=0;
-    while()
+    vector<int>p(n);
+    p[0]=a[0];
+    for(int i=1;i<n;i++){
+        p[i]=a[i]+p[i-1];
+    }
+    long long minimum = LLONG_MAX;
 
-
-
-
+    for(int i=0;i<k;i++){
+        minimum=min(minimum,p[0+2*(k-i)-1]+p[n-1]-p[n-1-i]);
+    }
+    minimum=min(minimum,p[n-1]-p[n-1-k]);
+    cout<<sum-minimum;
 }
 
 signed main(){
