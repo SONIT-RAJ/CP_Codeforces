@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 13:31:12 26-03-2025
+    created: 01:34:24 14-04-2025
 */
 
 
@@ -25,33 +25,47 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n,l,r;
-    cin>>n>>l>>r;
+    int n;
+    cin>>n;
     vector<int>a(n);
-    unordered_map<int,bool>mpp;
-    for(int i=n;i>=1;i--){
-        int x=r%i;
-        int y=r-x;
-        while(mpp[__gcd(y,i)]==true){
-            y-=i;
-            if(y<l){
+    int total=0;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        total+=a[i];
+    }
+    int sum=0;
+    int start=0;
+    int maxsum=LLONG_MIN;
+    for(int i=0;i<n;i++){
+        if(sum==0){
+            start=i;
+        }
+        sum+=a[i];
+        if(maxsum<sum){
+            maxsum=sum;
+        }
+        if(sum<=0){
+            sum=0;
+        }
+        if(i==n-1 && start==0){
+            if(maxsum>=total){
+                cout<<"YES";
+                return;
+            }
+        }
+        else{
+            if(maxsum>=total){
                 cout<<"NO";
                 return;
             }
         }
-        if(y<l){
-            cout<<"NO";
-            return;
-        }
-        mpp[y]=true;
-        a[i-1]=y;
     }
-    cout<<"YES"<<"\n";
-    for(int i=0;i<n;i++){
-        cout<<a[i]<<" ";
+    if(maxsum<total){
+        cout<<"YES";
     }
-
-
+    else{
+        cout<<"NO";
+    }
 
 
 
