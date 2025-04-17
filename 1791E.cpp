@@ -1,3 +1,9 @@
+/*
+   Author: SONIT RAJ
+    created: 21:40:57 15-04-2025
+*/
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -19,28 +25,34 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n,k;
-    cin>>n>>k;
-    long long answer=0;
-    vector<int>a(n+1);
-    for(int i=1;i<=n;i++){
+    int n;
+    cin>>n;
+    vector<int>a(n);
+    int minimum=LLONG_MAX;
+    int total=0;
+    int flag=0;
+    int countN=0;
+    for(int i=0;i<n;i++){
         cin>>a[i];
+        if(a[i]==0){
+            flag==1;
+        }
+        else if(a[i]<0){
+            countN++;
+        }
+        minimum=min(minimum,abs(a[i]));
+        total+=abs(a[i]);
     }
-    int required=min(k,n-k+1);
-    for(int i=1;i<=n;i++){
-        if(i<k && n-i<k){
-            answer+=1LL*a[i]*required;
-        }
-        else if(i<=required){
-            answer+=1LL*a[i]*min(required,i);
-        }
-        else{
-            answer+=1LL*a[i]*min(required,n-i+1);
-        }
+    if(flag){
+        cout<<total;
+    }
+    if(countN%2==0){
+        cout<<total;
+    }
+    else{
+        cout<<total-(2*minimum);
+    }
 
-    }
-    double ans=(1.000000*answer)/(n-k+1);
-    cout << fixed << setprecision(6) << ans << endl;
 
 
 
@@ -49,7 +61,8 @@ void solve(){
 signed main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    int t=1;
+    int t;
+    cin>>t;
     while(t--){
         solve();
         cout<<"\n";

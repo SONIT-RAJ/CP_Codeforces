@@ -1,3 +1,9 @@
+/*
+   Author: SONIT RAJ
+    created: 21:35:23 17-04-2025
+*/
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -19,28 +25,38 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n,k;
-    cin>>n>>k;
-    long long answer=0;
-    vector<int>a(n+1);
-    for(int i=1;i<=n;i++){
+    int n,m;
+    cin>>n>>m;
+    vector<int>a(n);
+    a[0]=1;
+    for(int i=1;i<n;i++){
         cin>>a[i];
     }
-    int required=min(k,n-k+1);
-    for(int i=1;i<=n;i++){
-        if(i<k && n-i<k){
-            answer+=1LL*a[i]*required;
-        }
-        else if(i<=required){
-            answer+=1LL*a[i]*min(required,i);
+    vector<int>b(n);
+    for(int i=0;i<n;i++){
+        cin>>b[i];
+    }
+    sort(a.begin(),a.end());
+    sort(b.begin(),b.end());
+    int q=0;
+    int front=a[q];
+    int back=b[n-1-q];
+    int i=0;
+    int j=n-1;
+    int count=0;
+    while(i<n && j>=0){
+        front=a[q];
+        back=b[n-1-q];
+        if(b[i]<=front || a[j]>=back){
+            count++;
         }
         else{
-            answer+=1LL*a[i]*min(required,n-i+1);
+            q++;
         }
-
+        i++;
+        j--;
     }
-    double ans=(1.000000*answer)/(n-k+1);
-    cout << fixed << setprecision(6) << ans << endl;
+    cout<<count;
 
 
 
@@ -49,7 +65,8 @@ void solve(){
 signed main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    int t=1;
+    int t;
+    cin>>t;
     while(t--){
         solve();
         cout<<"\n";

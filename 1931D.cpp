@@ -1,3 +1,9 @@
+/*
+   Author: SONIT RAJ
+    created: 23:35:18 16-04-2025
+*/
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -17,30 +23,24 @@ const ll inf = 2e18 + 5;
 const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
+
 void solve(){
 
-    int n,k;
-    cin>>n>>k;
-    long long answer=0;
-    vector<int>a(n+1);
-    for(int i=1;i<=n;i++){
+    int n,x,y;
+    cin>>n>>x>>y;
+    vector<int>a(n);
+    int answer=0;
+    map<pair<int,int>,int> mpp;
+    for(int i=0;i<n;i++){
         cin>>a[i];
-    }
-    int required=min(k,n-k+1);
-    for(int i=1;i<=n;i++){
-        if(i<k && n-i<k){
-            answer+=1LL*a[i]*required;
-        }
-        else if(i<=required){
-            answer+=1LL*a[i]*min(required,i);
-        }
-        else{
-            answer+=1LL*a[i]*min(required,n-i+1);
-        }
+        int pairx=(x-a[i]%x)%x;
+        int pairy=a[i]%y;
+        answer+=mpp[{pairx,pairy}];
+        mpp[{a[i]%x,a[i]%y}]++;
 
     }
-    double ans=(1.000000*answer)/(n-k+1);
-    cout << fixed << setprecision(6) << ans << endl;
+    cout<<answer;
+
 
 
 
@@ -49,7 +49,8 @@ void solve(){
 signed main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    int t=1;
+    int t;
+    cin>>t;
     while(t--){
         solve();
         cout<<"\n";

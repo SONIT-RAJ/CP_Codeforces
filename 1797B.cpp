@@ -1,3 +1,9 @@
+/*
+   Author: SONIT RAJ
+    created: 20:52:51 16-04-2025
+*/
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -21,26 +27,36 @@ void solve(){
 
     int n,k;
     cin>>n>>k;
-    long long answer=0;
-    vector<int>a(n+1);
+    int count=0;
+    vector<vector<int>>a(n+1,vector<int>(n+1));
     for(int i=1;i<=n;i++){
-        cin>>a[i];
+        for(int j=1;j<=n;j++){
+            cin>>a[i][j];
+        }
     }
-    int required=min(k,n-k+1);
-    for(int i=1;i<=n;i++){
-        if(i<k && n-i<k){
-            answer+=1LL*a[i]*required;
+    for(int i=1;i<=(n+1)/2;i++){
+        for(int j=1;j<=n;j++){
+            if(a[i][j]==a[n-i+1][n-j+1]){
+                continue;
+            }
+            count++;
+            if(count>k){
+                cout<<"NO";
+                return;
+            }
+            a[i][j]=a[n-i+1][n-j+1];
         }
-        else if(i<=required){
-            answer+=1LL*a[i]*min(required,i);
-        }
-        else{
-            answer+=1LL*a[i]*min(required,n-i+1);
-        }
+    }
+    if((k-count)%2==0){
+        cout<<"YES";
+    }
+    else if(n%2==1){
+        cout<<"YES";
+    }
+    else{
+        cout<<"NO";
+    }
 
-    }
-    double ans=(1.000000*answer)/(n-k+1);
-    cout << fixed << setprecision(6) << ans << endl;
 
 
 
@@ -49,7 +65,8 @@ void solve(){
 signed main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
-    int t=1;
+    int t;
+    cin>>t;
     while(t--){
         solve();
         cout<<"\n";
