@@ -50,6 +50,10 @@ void solve(){
             return;
         }
     }
+    if(m==1){
+        cout<<b[0];
+        return;
+    }
     vector<int>s(m);
     int k=0;
     for(int i=0;i<n;i++){
