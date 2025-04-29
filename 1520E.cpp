@@ -69,7 +69,7 @@ void solve(){
         answer=min(answer,sum);
     }
     cout<<answer;
-//this was a very good question
+//this was a very good question of prefix sum and binary search
 
 
 }
