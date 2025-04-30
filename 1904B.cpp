@@ -42,7 +42,7 @@ void solve(){
     }
     vector<int>answer(n+1,-1);
     for(int i=n;i>=1;i--){
-        auto it = upper_bound(b.begin(), b.end(), p[n]);
+        auto it = upper_bound(b.begin(), b.end(), p[i]);
         int index = it - b.begin()-1;
         if(answer[a[index][1]]==-1){
             answer[a[i][1]]=index-1;
