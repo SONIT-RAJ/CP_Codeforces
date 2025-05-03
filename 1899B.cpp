@@ -1,9 +1,3 @@
-/*
-   Author: SONIT RAJ
-    created: 14:38:39 01-05-2025
-*/
-
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -27,10 +21,30 @@ void solve(){
 
     int n;
     cin>>n;
-    vector<int>a(n);
-    for(int i=0;i<n;i++){
+    vector<int>a(n+1,0);
+    for(int i=1;i<=n;i++){
         cin>>a[i];
     }
+    vector<int>p(n+1,0);
+    p[0]=a[0];
+    for(int i=1;i<=n;i++){
+        p[i]=p[i-1]+a[i];
+    }
+    int answer=LLONG_MIN;
+
+    for(int i=1;i<=n;i++){
+        if(n%i==0){
+            int maxi=LLONG_MIN;
+        int mini=LLONG_MAX;
+        for(int j=i;j<=n;j+=i){
+            int present=p[j]-p[j-i];
+            maxi=max(maxi,present);
+            mini=min(mini,present);
+        }
+        answer=max(answer,abs(maxi-mini));
+        }
+    }
+    cout<<answer;
 
 
 
