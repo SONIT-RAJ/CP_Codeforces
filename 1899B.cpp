@@ -30,7 +30,7 @@ void solve(){
     for(int i=1;i<=n;i++){
         p[i]=p[i-1]+a[i];
     }
-    int answer=LLONG_MIN;
+    long long answer=LLONG_MIN;
 
     for(int i=1;i<=n;i++){
         if(n%i==0){
