@@ -18,6 +18,7 @@ const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
 void solve(){
+    //good question
 
     int n;
     cin>>n;
