@@ -1,32 +1,45 @@
-#include <bits/stdc++.h>
+/*
+   Author: SONIT RAJ
+    created: 21:58:50 20-05-2025
+*/
+
+
+#include<bits/stdc++.h>
 using namespace std;
 
+#pragma GCC optimize("Ofast,unroll-loops")
+#pragma GCC target("avx,avx2,fma")
+
 #define ll long long
+#define int long long
+#define rep(i,a,b) for(int i = a; i<b; i++)
+#define rew(x) for(int i = 0; i<x; i++)
+#define all(x) x.begin(), x.end()
+#ifdef ONLINE_JUDGE
+    #define de(...)
+    #define de2(...)
+#endif
+const ll inf = 2e18 + 5;
+const ll M = 1e9 + 7;
+#define PI 3.141592653589
 
-ll calculateTurns(ll n, ll m, ll a, ll b) {
-    // Distance to closest border (row-wise and column-wise)
-    ll rowRange = min(a, n - a + 1);
-    ll colRange = min(b, m - b + 1);
+void solve(){
 
-    // Number of cuts = 1 (final step) + ceil(log2(rowRange)) + ceil(log2(colRange))
-    ll turns = 1;
-    turns += (ll)ceil(log2(rowRange));
-    turns += (ll)ceil(log2(colRange));
+    int n;
+    cin>>n;
 
-    return turns;
+
+
+
 }
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    int t;
-    cin >> t;
-    while (t--) {
-        ll n, m, a, b;
-        cin >> n >> m >> a >> b;
-        cout << calculateTurns(n, m, a, b) << "\n";
+signed main(){
+    ios_base::sync_with_stdio(0);
+    cin.tie(0); cout.tie(0);
+    int t=1;
+    cin>>t;
+    while(t--){
+        solve();
+        cout<<"\n";
     }
-
-    return 0;
 }
