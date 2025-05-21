@@ -25,12 +25,8 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n;
-    cin>>n;
-
-
-
-
+    int n,m,a,b;
+    cin>>n>>m>>a>>b;
 }
 
 signed main(){
