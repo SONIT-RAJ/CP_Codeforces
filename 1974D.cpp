@@ -41,23 +41,23 @@ void solve(){
     for(int i=0;i<n;i++){
         if(s[i]=='N'){
             if(up){
-                ans.push_back('R');
-                flag1=1;
-            }
-            else{
                 ans.push_back('H');
                 flag2=1;
+            }
+            else{
+                ans.push_back('R');
+                flag1=1;
             }
             up=(!(up));
         }
         if(s[i]=='S'){
             if(down){
-                ans.push_back('R');
-                flag1=1;
-            }
-            else{
                 ans.push_back('H');
                 flag2=1;
+            }
+            else{
+                ans.push_back('R');
+                flag1=1;
             }
             down=(!(down));
         }
