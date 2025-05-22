@@ -27,6 +27,54 @@ void solve(){
 
     int n,m,a,b;
     cin>>n>>m>>a>>b;
+    int col=min(b,m-b+1);
+    int row=min(a,n-a+1);
+    int ans1=1;
+    while(n>1){
+        if(n%2==0){
+            n/=2;
+        }
+        else{
+            n/=2;
+            n++;
+        }
+        ans1++;
+    }
+    while(col>1){
+        if(col%2==0){
+            col/=2;
+        }
+        else{
+            col/=2;
+            col++;
+        }
+        ans1++;
+    }
+    int ans2=1;
+    while(m>1){
+        if(m%2==0){
+            m/=2;
+        }
+        else{
+            m/=2;
+            m++;
+        }
+        ans2++;
+    }
+    while(row>1){
+        if(row%2==0){
+            row/=2;
+        }
+        else{
+            row/=2;
+            row++;
+        }
+        ans2++;
+    }
+    cout<<min(ans1,ans2);
+
+
+
 }
 
 signed main(){
