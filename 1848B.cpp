@@ -27,22 +27,7 @@ void solve(){
 
     int n,k;
     cin>>n>>k;
-    vector<int>a(n);
-    map<int,int>mpp;
-    map<int,int>gap;
-    for(int i=0;i<n;i++){
-        cin>>a[i];
-    }
-    for(int i=0;i<n;i++){
-        if(mpp.find(a[i])==mpp.end()){
-            gap[a[i]]=max(i,n-i-1);
-            mpp[a[i]]=i;
-        }
-        else{
-            gap[a[i]]=max(gap[a[i]],);
-        }
-    }
-    cout<<c;
+
 
 
 
