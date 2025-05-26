@@ -27,6 +27,44 @@ void solve(){
 
     int n,k;
     cin>>n>>k;
+    vector<int>a(n);
+    map<int,int>last;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        last[a[i]]++;
+    }
+    int ans=n;
+    map<int,pair<int,int>>mpp;
+    map<int,int>idx;
+    for(int i=0;i<n;i++){
+        if(mpp.find(a[i])==mpp.end()){
+            mpp[a[i]].first=i;
+        }
+        else{
+            int d=i-idx[a[i]]-1;
+            if(d>=mpp[a[i]].first){
+                mpp[a[i]].second=mpp[a[i]].first;
+                mpp[a[i]].first=d;
+            }
+            else if(d>=mpp[a[i]].second){
+                mpp[a[i]].second=d;
+            }
+        }
+        last[a[i]]--;
+        if(last[a[i]]<=0){
+            if(n-i-1>=mpp[a[i]].first){
+                mpp[a[i]].second=mpp[a[i]].first;
+                mpp[a[i]].first=n-i-1;
+            }
+            else if(n-i-1>=mpp[a[i]].second){
+                mpp[a[i]].second=n-i-1;
+            }
+            int big=max(mpp[a[i]].first/2,mpp[a[i]].second);
+            ans=min(ans,big);
+        }
+        idx[a[i]]=i;
+    }
+    cout<<ans;
 
 
 
