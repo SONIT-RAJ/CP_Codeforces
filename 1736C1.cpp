@@ -27,7 +27,24 @@ void solve(){
 
     int n;
     cin>>n;
+    vector<int>a(n+1,0);
+    for(int i=1;i<=n;i++){
+        cin>>a[i];
+    }
+    int ans=0;
+    int j=1;
+    int i=1;
+    while(j<=n){
+        while(a[j]<(j-i+1)){
+            i++;
+        }
+        if(a[j]>=(j-i+1)){
+            ans+=(j-i+1);
+            j++;
+        }
 
+    }
+    cout<<ans;
 
 
 

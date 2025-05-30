@@ -25,8 +25,72 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n;
-    cin>>n;
+    int n,m,k;
+    cin>>n>>m>>k;
+    vector<vector<char>>a(n,vector<char>(m));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cin>>a[i][j];
+        }
+    }
+    map<pair<int,int>,bool>mpp;
+    for(int i=n-1;i>=0;i--){
+        for(int j=0;j<m;j++){
+            if(a[i][j]=='.'){
+                continue;
+            }
+            else{
+                int p;
+                int q1;
+                int q2;
+                    int c=0;
+                    for(int v=1;v<=max(n,m);v++){
+                        p=i-v;
+                        q1=j-v;
+                        q2=j+v;
+                        if(p>=0 && p<n){
+                            if(q1>=0 && q1<m && a[p][q1]=='*'){
+                                if(q2>=0 && q2<m && a[p][q2]=='*'){
+                                    c++;
+                                    continue;
+                                }
+                            }
+                            break;
+                        }
+                        break;
+                    }
+                    if(c<k && mpp[{i, j}]==false){
+                        cout<<"NO";
+                        return;
+                    }
+                    else if(c<k){
+                        mpp[{i, j}]=true;
+                    }
+                    else{
+                        int c=0;
+                        for(int v=1;v<=max(n,m);v++){
+                        p=i-v;
+                        q1=j-v;
+                        q2=j+v;
+                        if(p>=0 && p<n){
+                            if(q1>=0 && q1<m && a[p][q1]=='*'){
+                                if(q2>=0 && q2<m && a[p][q2]=='*'){
+                                    mpp[{p, q1}]=true;
+                                    mpp[{p, q2}]=true;
+                                    c++;
+                                    continue;
+                                }
+                            }
+                            break;
+                        }
+                        break;
+                        }
+                    }
+            }
+
+        }
+    }
+    cout<<"YES";
 
 
 

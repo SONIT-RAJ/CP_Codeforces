@@ -1,45 +1,81 @@
-/*
-   Author: SONIT RAJ
-    created: 09:59:23 29-05-2025
-*/
-
-
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
-#pragma GCC optimize("Ofast,unroll-loops")
-#pragma GCC target("avx,avx2,fma")
-
-#define ll long long
-#define int long long
-#define rep(i,a,b) for(int i = a; i<b; i++)
-#define rew(x) for(int i = 0; i<x; i++)
-#define all(x) x.begin(), x.end()
-#ifdef ONLINE_JUDGE
-    #define de(...)
-    #define de2(...)
-#endif
-const ll inf = 2e18 + 5;
-const ll M = 1e9 + 7;
-#define PI 3.141592653589
-
-void solve(){
-
-    int n;
-    cin>>n;
-
-
-
-
+// 0-based perform: op(i+1) in problem
+void perform(vector<int>& a, int i) {
+    int n = a.size();
+    if (i > 0) {
+        int tmp = a[i-1];
+        for (int j = i-1; j > 0; --j)
+            a[j] = a[j-1];
+        a[0] = tmp;
+    }
+    if (i < n-1) {
+        int tmp = a[n-1];
+        for (int j = n-1; j > i+1; --j)
+            a[j] = a[j-1];
+        a[i+1] = tmp;
+    }
 }
 
-signed main(){
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-    int t=1;
-    cin>>t;
-    while(t--){
-        solve();
-        cout<<"\n";
+int main(){
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int T;
+    cin >> T;
+    while (T--) {
+        int n;
+        cin >> n;
+        vector<int> a(n), b(n);
+        for (int &x : a) cin >> x;
+        for (int &x : b) cin >> x;
+
+        // n<=2 is trivial:
+        if (n <= 2) {
+            cout << (a==b ? 0 : -1) << "\n";
+            continue;
+        }
+
+        // fast multiset check
+        {
+            auto ta = a, tb = b;
+            sort(ta.begin(), ta.end());
+            sort(tb.begin(), tb.end());
+            if (ta != tb) {
+                cout << -1 << "\n";
+                continue;
+            }
+        }
+
+        vector<int> ops;
+        // Place b[j] into a[j], for j = n-1 down to 0
+        for (int j = n-1; j >= 0; --j) {
+            if (a[j] == b[j]) continue;
+            int pos = find(a.begin(), a.end(), b[j]) - a.begin();
+
+            // If pos is exactly j-1, op(pos) might be a no-op on a tiny segment.
+            // In that case, shift from the other side by doing op(pos-1) first.
+            int first = pos;
+            if (pos == j-1)
+                first = pos - 1;  // guaranteed >= 0 because j>=1
+
+            ops.push_back(first + 1);
+            perform(a, first);
+
+            // now our target is somewhere in the big suffix/prefix cycle—finally push it to j
+            ops.push_back(j + 1);
+            perform(a, j);
+        }
+
+        // Done
+        if (a == b && (int)ops.size() <= 2*n) {
+            cout << ops.size() << "\n";
+            for (int x : ops) cout << x << " ";
+            cout << "\n";
+        } else {
+            cout << -1 << "\n";
+        }
     }
+    return 0;
 }
