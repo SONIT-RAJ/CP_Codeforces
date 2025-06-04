@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 00:59:03 27-05-2025
+    created: 20:53:28 02-06-2025
 */
 
 
@@ -25,42 +25,34 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n,q;
-    cin>>n>>q;
+    int n;
+    cin>>n;
     vector<int>a(n);
     int sum=0;
     for(int i=0;i<n;i++){
         cin>>a[i];
         sum+=a[i];
     }
-    int last=-1;
-    map<int,bool>mpp;
-    while(q--){
-        int type;
-        cin>>type;
-        if(type==1){
-            int i,x;
-            cin>>i>>x;
-            if(last==-1 || mpp[i-1]==true){
-                sum+=x-a[i-1];
-                cout<<sum<<endl;
-                a[i-1]=x;
-            }
-            else{
-                sum+=x-last;
-                cout<<sum<<endl;
-                mpp[i-1]=true;
-                a[i-1]=x;
-            }
+    if(sum%2==1){
+        cout<<"NO";
+        return;
+    }
+    sort(a.begin(),a.end(),greater<int>());
+    int f=a[0];
+    for(int i=1;i<n;i++){
+        if(f>=a[i]){
+            f-=a[i];
         }
         else{
-            cin>>last;
-            sum=last*n;
-            cout<<sum<<endl;
-            mpp.clear();
+            f=a[i]-f;
         }
     }
-
+    if(f==0){
+        cout<<"YES";
+    }
+    else{
+        cout<<"NO";
+    }
 
 
 

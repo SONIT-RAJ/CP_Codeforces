@@ -7,8 +7,8 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-#pragma GCC optimize("Ofast,unroll-loops") 
-#pragma GCC target("avx,avx2,fma") 
+#pragma GCC optimize("Ofast,unroll-loops")
+#pragma GCC target("avx,avx2,fma")
 
 #define ll long long
 #define int long long
@@ -44,10 +44,63 @@ void solve(){
         return;
     }
     else{
-        int r=sum-s;
-        for(i)
+        int f=sum-s;
+        int i=0;
+        int j=n-1;
+        int l=0;
+        while(l!=f){
+            if(a[i]==1){
+                l++;
+            }
+            i++;
+        }
+        int ans1=i;
+        i--;
+        int k=n-1;
+        while(i>=0 && i<=k){
+            if(a[i]==1){
+                while(a[k]==0){
+                    k--;
+                }
+                k--;
+            }
+            if(i>k){
+                break;
+            }
+            ans1=min(ans1,i+n-k-1);
+            i--;
+        }
+
+
+
+
+        l=0;
+        while(l!=f){
+            if(a[j]==1){
+                l++;
+            }
+            j--;
+        }
+        int ans2=n-1-j;
+        k=0;
+        j++;
+        while(j<n && j>=k){
+            if(a[j]==1){
+                while(a[k]==0){
+                    k++;
+                }
+                k++;
+            }
+            if(j<k){
+                break;
+            }
+            ans2=min(ans2,k+n-j-1);
+            j++;
+        }
+        cout<<min(ans1,ans2);
+
     }
-    
+
 
 
 
