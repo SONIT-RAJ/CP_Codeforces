@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 20:53:28 02-06-2025
+    created: 11:24:08 05-06-2025
 */
 
 
@@ -25,26 +25,38 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n;
-    cin>>n;
-    vector<int>a(n);
-    int sum=0;
+    int n,q;
+    cin>>n>>q;
+    string s;
+    cin>>s;
+    int bi=-1;
+    int ci=-1;
     for(int i=0;i<n;i++){
-        cin>>a[i];
-        sum+=a[i];
+        if(s[i]=='b' && bi==-1){
+            bi=i;
+        }
+        else if(s[i]=='c' && ci==-1){
+            ci=i;
+        }
+        if(bi!=-1 && ci!=-1){
+            break;
+        }
     }
-    if(sum%2==1){
-        cout<<"NO";
-        return;
+    while(q--){
+        char x,y;
+        cin>>x>>y;
+        if(x<=y){
+            continue;
+        }
+        if(x=='b'){
+            if(bi==n){
+
+            }
+        }
+
+
     }
-    sort(a.begin(),a.end(),greater<int>());
-    sum/=2;
-    if(sum>=a[0]){
-        cout<<"YES";
-    }
-    else{
-        cout<<"NO";
-    }
+
 
 
 
@@ -54,7 +66,9 @@ signed main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     int t=1;
+    cin>>t;
     while(t--){
         solve();
+        cout<<"\n";
     }
 }
