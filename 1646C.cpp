@@ -32,36 +32,34 @@ int countSetBits(long long n) {
     return count;
 }
 
+int find(vector<int>&f,int n,int i){
+    if(i>=16){
+        return countSetBits(n);
+    }
+    int ans=LLONG_MAX;
+    if(n>=f[i]){
+        int sub=1+find(f,n-f[i],i+1);
+        ans=sub;
+    }
+    return min(ans,find(f,n,i+1));
+}
+
 
 void solve(){
 
-    vector<int>f(17,1);
-    for(int i=1;i<17;i++){
+    vector<int>f(16,1);
+    for(int i=1;i<16;i++){
         f[i]=f[i-1]*i;
     }
     int n;
     cin>>n;
     int s=countSetBits(n);
-    if(s<=1){
-        cout<<s;
+    if(s==1){
+        cout<<1;
         return;
     }
-    int c=0;
-    for(int j=16;j>=3;j--){
-        int right=countSetBits(n-f[j])+1;
-        int left=countSetBits(n);
-        if(left<=right){
-            continue;
-        }
-        else{
-            n-=f[j];
-            c++;
-        }
-    }
-
-
-
-    cout<<c+countSetBits(n);
+    int ans=find(f,n,1);
+    cout<<ans;
 
 
 
