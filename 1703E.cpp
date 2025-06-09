@@ -1,9 +1,3 @@
-/*
-   Author: SONIT RAJ
-    created: 22:00:52 09-06-2025
-*/
-
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -27,6 +21,46 @@ void solve(){
 
     int n;
     cin>>n;
+    vector<vector<char>>a(n,vector<char>(n));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cin>>a[i][j];
+        }
+    }
+    int ans=0;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            int a1=0;
+            int a2=0;
+            if(a[i][j]=='0'){
+                a1++;
+            }
+            else{
+                a2++;
+            }
+            if(a[j][n-1-i]=='0'){
+                a1++;
+            }
+            else{
+                a2++;
+            }
+            if(a[n-1-i][n-1-j]=='0'){
+                a1++;
+            }
+            else{
+                a2++;
+            }
+            if(a[n-1-j][i]=='0'){
+                a1++;
+            }
+            else{
+                a2++;
+            }
+            int maxi=max(a1,a2);
+            ans+=4-maxi;
+        }
+    }
+    cout<<ans/4;
 
 
 
