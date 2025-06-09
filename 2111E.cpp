@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 11:24:08 05-06-2025
+    created: 22:01:16 09-06-2025
 */
 
 
@@ -25,37 +25,8 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n,q;
-    cin>>n>>q;
-    string s;
-    cin>>s;
-    int bi=-1;
-    int ci=-1;
-    for(int i=0;i<n;i++){
-        if(s[i]=='b' && bi==-1){
-            bi=i;
-        }
-        else if(s[i]=='c' && ci==-1){
-            ci=i;
-        }
-        if(bi!=-1 && ci!=-1){
-            break;
-        }
-    }
-    while(q--){
-        char x,y;
-        cin>>x>>y;
-        if(x<=y){
-            continue;
-        }
-        if(x=='b'){
-            if(bi==n){
-
-            }
-        }
-
-
-    }
+    int n;
+    cin>>n;
 
 
 
