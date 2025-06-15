@@ -42,8 +42,31 @@ void solve(){
     unordered_set<int>up,down;
     int i=n-1;
     for(;i>=-1;i--){
-
+        if(a[i]==b[i] || i==-1){
+            break;
+        }
+        if(i%2==0){
+            if(up.count(a[i]))break;
+            if(down.count(b[i]))break;
+            if(i+1<n){
+                up.insert(b[i+1]);
+                down.insert(a[i+1]);
+            }
+            if(up.count(b[i]))break;
+            if(down.count(a[i]))break;
+        }
+        else{
+            if(up.count(b[i]))break;
+            if(down.count(a[i]))break;
+            if(i+1<n){
+                up.insert(a[i+1]);
+                down.insert(b[i+1]);
+            }
+            if(up.count(a[i]))break;
+            if(down.count(b[i]))break;
+        }
     }
+    cout<<i+1;
 
 
 }
