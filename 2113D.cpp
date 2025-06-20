@@ -23,10 +23,68 @@ const ll inf = 2e18 + 5;
 const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
+bool check(int mid,vector<int>&a,vector<int>&b,vector<int>&p,vector<int>&m,int n){
+    vector<int>A=a;
+    int mine=0;
+    int opp=0;
+    int flag=0;
+    int i=0;
+    int j=0;
+    while(mine+opp<n){
+        int up=A[i];
+        if(up==m[mid-1] && flag==0){
+            flag=1;
+            up=max(up,p[mid-1]);
+            A[i]=up;
+        }
+        if(up>b[j]){
+            i++;
+            mine++;
+        }
+        else{
+            j++;
+            opp++;
+        }
+    }
+    return mine>=mid;
+}
+
 void solve(){
 
     int n;
     cin>>n;
+    vector<int>a(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    vector<int>b(n);
+    for(int i=0;i<n;i++){
+        cin>>b[i];
+    }
+    vector<int>m(n);
+    m[0]=a[0];
+    for(int i=1;i<n;i++){
+        m[i]=min(m[i-1],a[i]);
+    }
+    vector<int>p(n);
+    p[n-1]=0;
+    for(int i=n-2;i>=0;i--){
+        p[i]=max(a[i+1],p[i+1]);
+    }
+    int low=1;
+    int high=n;
+    int ans=0;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        if(check(mid,a,b,p,m,n)){
+            ans=mid;
+            low=mid+1;
+        }
+        else{
+            high=mid-1;
+        }
+    }
+    cout<<ans;
 
 
 
