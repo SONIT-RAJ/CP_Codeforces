@@ -25,8 +25,48 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n;
-    cin>>n;
+    int n,m,k;
+    cin>>n>>m>>k;
+    vector<vector<int>>a(n+1,vector<int>(m+1,0));
+    vector<vector<char>>b(n+1,vector<char>(m+1));
+    char x;
+    int maxi=0;
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            cin>>x;
+            b[i][j]=x;
+            if(x=='g'){
+                a[i][j]=1;
+                maxi++;
+            }
+        }
+    }
+    vector<vector<int>>p(n+1,vector<int>(m+1,0));
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            p[i][j]=p[i-1][j]+p[i][j-1]-p[i-1][j-1]+a[i][j];
+        }
+    }
+    int mini=LLONG_MAX;
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=m;j++){
+            if(b[i][j]=='.'){
+                int downx=min(n,i+k-1);
+                int downy=min(m,j+k-1);
+                int upx=max(1LL,i-k+1);
+                int upy=max(1LL,j-k+1);
+                int present=p[downx][downy]+p[upx-1][upy-1]-p[upx-1][downy]-p[downx][upy-1];
+                mini=min(mini,present);
+            }
+
+        }
+    }
+    if(mini==LLONG_MAX){
+        cout<<0;
+        return;
+    }
+    cout<<maxi-mini;
+
 
 
 
