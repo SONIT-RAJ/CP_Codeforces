@@ -25,34 +25,37 @@ void solve(){
     for(int i=0;i<n;i++){
         cin>>a[i];
     }
-    int i=1;
+    int i=0;
     int j=n-1;
     int flag=0;
-    int wrong=1;
-    int last=a[0];
     string ans;
-    ans1.push_back('L');
     while(i<=j){
         char temp;
         if(flag==0){
-            if(a[i]>a[j]){
+            if(a[i]<a[j]){
                 temp='L';
+                i++;
             }
             else{
                 temp='R';
+                j--;
             }
             flag=1;
         }
         else{
             if(a[i]<a[j]){
                 temp='R';
+                j--;
             }
             else{
                 temp='L';
+                i++;
             }
             flag=0;
         }
+        ans.push_back(temp);
     }
+    cout<<ans;
 
 
 
