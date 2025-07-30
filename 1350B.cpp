@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 22:21:19 29-07-2025
+    created: 21:18:48 29-07-2025
 */
 
 
@@ -23,36 +23,32 @@ const ll inf = 2e18 + 5;
 const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
+int f(vector<int>&a,vector<int>&dp,int i,int &n){
+    if(dp[i]!=-1)return dp[i];
+    int maxi=1;
+    for(int j=2*i;j<=n;j+=i){
+        if(a[j]>a[i]){
+            maxi=max(maxi,1+f(a,dp,j,n));
+        }
+    }
+    return dp[i]=maxi;
+}
+
 void solve(){
 
     int n;
     cin>>n;
-    vector<int>a(n);
-    int xoor=0;
-    for(int i=0;i<n;i++){
+    vector<int>a(n+1);
+    for(int i=1;i<=n;i++){
         cin>>a[i];
-        xoor^=a[i];
     }
-    if(xoor==0){
-        cout<<"YES";
-        return;
+    vector<int>dp(n+1,-1);
+    int ans=1;
+    for(int i=1;i<=n;i++){
+        f(a,dp,i,n);
+        ans=max(ans,dp[i]);
     }
-    int p=0;
-    int c=0;
-    for(int i=0;i<n;i++){
-        p^=a[i];
-        if(p==xoor){
-            p=0;
-            c++;
-        }
-    }
-    if(p==0 && c>1){
-        cout<<"YES";
-    }
-    else{
-        cout<<"NO";
-    }
-
+    cout<<ans;
 
 
 

@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 22:21:19 29-07-2025
+    created: 22:51:30 29-07-2025
 */
 
 
@@ -23,35 +23,34 @@ const ll inf = 2e18 + 5;
 const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
+int f(vector<int>&a,vector<vector<int>>&dp,int i,int length){
+    if(i>=a.size()){
+        return 1;
+    }
+
+    if(dp[i][length]!=-1)return dp[i][length];
+
+    int np=f(a,dp,i+1,length);
+
+    int p=0;
+
+    if((a[i])%(length+1)==0 && length<a.size()){
+        p=f(a,dp,i+1,length+1);
+    }
+
+    return dp[i][length]=(p+np)%M;
+}
+
 void solve(){
 
     int n;
     cin>>n;
     vector<int>a(n);
-    int xoor=0;
     for(int i=0;i<n;i++){
         cin>>a[i];
-        xoor^=a[i];
     }
-    if(xoor==0){
-        cout<<"YES";
-        return;
-    }
-    int p=0;
-    int c=0;
-    for(int i=0;i<n;i++){
-        p^=a[i];
-        if(p==xoor){
-            p=0;
-            c++;
-        }
-    }
-    if(p==0 && c>1){
-        cout<<"YES";
-    }
-    else{
-        cout<<"NO";
-    }
+    vector<vector<int>>dp(n,vector<int>(n,-1));
+    cout<<f(a,dp,0,0)-1;
 
 
 
@@ -62,9 +61,7 @@ signed main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     int t=1;
-    cin>>t;
     while(t--){
         solve();
-        cout<<"\n";
     }
 }
