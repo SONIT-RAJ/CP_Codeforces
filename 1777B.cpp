@@ -23,13 +23,17 @@ void pre(){
     for(int i=2;i<=1e5;i++){
         dp[i]=(i*dp[i-1])%M;
     }
+    for(int i=1;i<=1e5;i++){
+        dp[i]=(dp[i]*i)%M;
+        dp[i]=(dp[i]*(i-1))%M;
+    }
 }
 
 void solve(){
 
     int n;
     cin>>n;
-    cout<<(dp[n]*n*(n-1))%M;
+    cout<<dp[n];
 
 
 
