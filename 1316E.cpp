@@ -26,14 +26,15 @@ const ll M = 1e9 + 7;
 int f(int i,int k,int bit,vector<int>&a,vector<vector<int>>&b,vector<vector<vector<int>>>&dp){
     if(i>=a.size())return 0;
     if(dp[bit][k][i]!=-1)return dp[bit][k][i];
-    int audi=(k==0)?-1e8:a[i]+f(i+1,k-1,bit,a,b,dp);
-    int player=-1e8;
+    int audi=(k==0)?0:a[i]+f(i+1,k-1,bit,a,b,dp);
+    int player=0;
     for(int j=0;j<b[0].size();j++){
         if((bit&(1<<j))==0){
-            player=max(player,b[i][b.size()-1-j]+f(i+1,k,bit|(1<<j),a,b,dp));
+            player=max(player,b[i][b[0].size()-1-j]+f(i+1,k,bit|(1<<j),a,b,dp));
         }
     }
-    return dp[bit][k][i]=max(player,audi);
+    int skip=f(i+1,k,bit,a,b,dp);
+    return dp[bit][k][i]=max({player,audi,skip});
 }
 
 void solve(){
@@ -50,7 +51,7 @@ void solve(){
             cin>>b[i][j];
         }
     }
-    vector<vector<vector<int>>>dp(128,vector<vector<int>>(k+1,vector<int>(n,-1)));
+    vector<vector<vector<int>>>dp(1<<p,vector<vector<int>>(k+1,vector<int>(n,-1)));
     cout<<f(0,k,0,a,b,dp);
 
 
