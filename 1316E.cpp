@@ -41,10 +41,12 @@ void solve(){
 
     int n,p,k;
     cin>>n>>p>>k;
-    vector<int>a(n);
+    vector<vector<int>>a(n,vector<int>(2));
     for(int i=0;i<n;i++){
-        cin>>a[i];
+        cin>>a[i][0];
+        a[i][0]=i;
     }
+    sort(a.begin(),a.end());
     vector<vector<int>>b(n,vector<int>(p));
     for(int i=0;i<n;i++){
         for(int j=0;j<p;j++){
