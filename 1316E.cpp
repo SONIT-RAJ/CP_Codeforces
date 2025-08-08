@@ -1,71 +1,60 @@
-/*
-   Author: SONIT RAJ
-    created: 13:30:29 04-08-2025
-*/
-
-
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
+using vi = vector<int>;
+using vvi = vector<vi>;
+using vl = vector<ll>;
+using vvl = vector<vl>;
+const ll mod = 1e9 + 7,inf = 1e18;
+#define fast ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
 
-#pragma GCC optimize("Ofast,unroll-loops")
-#pragma GCC target("avx,avx2,fma")
+int n = 1e5 + 5,p = 7,k;
+vvl dp(n,vl(1<<p,-1));
+vvl s(n,vl(p));
+vl a(n);
 
-#define ll long long
-#define int long long
-#define rep(i,a,b) for(int i = a; i<b; i++)
-#define rew(x) for(int i = 0; i<x; i++)
-#define all(x) x.begin(), x.end()
-#ifdef ONLINE_JUDGE
-    #define de(...)
-    #define de2(...)
-#endif
-const ll inf = 2e18 + 5;
-const ll M = 1e9 + 7;
-#define PI 3.141592653589
-
-int f(int i,int k,int bit,vector<int>&a,vector<vector<int>>&b,vector<vector<vector<int>>>&dp){
-    if(i>=a.size())return 0;
-    if(dp[bit][k][i]!=-1)return dp[bit][k][i];
-    int audi=(k==0)?0:a[i]+f(i+1,k-1,bit,a,b,dp);
-    int player=0;
-    for(int j=0;j<b[0].size();j++){
-        if((bit&(1<<j))==0){
-            player=max(player,b[i][b[0].size()-1-j]+f(i+1,k,bit|(1<<j),a,b,dp));
-        }
+ll solve(int i,int mask)
+{
+    if (i == n){
+        if (mask != (1<<p) - 1)return -inf;
+        return 0;
     }
-    int skip=f(i+1,k,bit,a,b,dp);
-    return dp[bit][k][i]=max({player,audi,skip});
+    if (dp[i][mask] != -1)return dp[i][mask];
+
+    int audience = i - __builtin_popcount(mask);
+
+    ll ans = solve(i + 1,mask) + (audience >= k ? 0 : a[i]);
+
+    for (int j = 0;j<p;j++){
+        if (mask & (1<<j))continue;
+        ans = max(ans,solve(i + 1,mask | (1<<j)) + s[i][j]);
+    }
+
+    return dp[i][mask] = ans;
 }
-
-void solve(){
-
-    int n,p,k;
+int main()
+{
     cin>>n>>p>>k;
-    vector<vector<int>>a(n,vector<int>(2));
-    for(int i=0;i<n;i++){
-        cin>>a[i][0];
-        a[i][0]=i;
-    }
-    sort(a.begin(),a.end());
-    vector<vector<int>>b(n,vector<int>(p));
-    for(int i=0;i<n;i++){
-        for(int j=0;j<p;j++){
-            cin>>b[i][j];
+    for (int i = 0;i<n;i++)cin>>a[i];
+
+    vvl b(n);
+    for (int i = 0;i<n;i++){
+        b[i].push_back(a[i]);
+        for (int j = 0;j<p;j++){
+            ll x;
+            cin>>x;
+            b[i].push_back(x);
         }
     }
-    vector<vector<vector<int>>>dp(1<<p,vector<vector<int>>(k+1,vector<int>(n,-1)));
-    cout<<f(0,k,0,a,b,dp);
 
+    sort(b.rbegin(),b.rend());
 
-
-
-}
-
-signed main(){
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-    int t=1;
-    while(t--){
-        solve();
+    for (int i = 0;i<n;i++){
+        a[i] = b[i][0];
+        for (int j = 0;j<p;j++)
+            s[i][j] = b[i][j + 1];
     }
+
+    cout<<solve(0,0);
+    return 0;
 }
