@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 22:41:17 03-08-2025
+    created: 17:04:51 08-08-2025
 */
 
 
@@ -23,25 +23,31 @@ const ll inf = 2e18 + 5;
 const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
+string f(string pre,int k){
+    while(pre.size()<k){
+        pre+=pre;
+    }
+    while(pre.size()>k){
+        pre.pop_back();
+    }
+    return pre;
+}
+
 void solve(){
 
-    int n;
-    cin>>n;
-    vector<int>a(n);
-    for(int i=0;i<n;i++){
-        cin>>a[i];
-    }
-    vector<int>dp(n,1);
-    int ans=1;
+    int n,k;
+    cin>>n>>k;
+    string s;
+    cin>>s;
+    string pre;
+    pre.push_back(s[0]);
+    string ans=f(pre,k);
     for(int i=1;i<n;i++){
-        dp[i]=dp[i-1]+1;
-        if(a[i]<a[i-1]){
-            dp[i]+=i;
-        }
-        ans+=dp[i];
+        if(s[i]>s[0])break;
+        pre.push_back(s[i]);
+        ans=min(ans,f(pre,k));
     }
     cout<<ans;
-
 
 
 
@@ -52,9 +58,7 @@ signed main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     int t=1;
-    cin>>t;
     while(t--){
         solve();
-        cout<<"\n";
     }
 }
