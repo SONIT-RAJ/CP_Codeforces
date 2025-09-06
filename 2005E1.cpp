@@ -24,12 +24,12 @@ const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
 int f(vector<int>&a,vector<vector<int>>&b,vector<vector<vector<int>>>&dp,int i,int j,int k){
-    if(i==b.size() || j==b[0].size() || k==a.size()){
+    if(i>=b.size() || j>=b[0].size() || k>=a.size()){
         return 0;
     }
     if(dp[i][j][k]!=-1)return dp[i][j][k];
     if(a[k]==b[i][j]){
-        dp[i][j][k]=( (f(a,b,dp,i,j+1,k)) || (f(a,b,dp,i+1,j,k))  || (!f(a,b,dp,i+1,j+1,k+1)));
+        dp[i][j][k]=( (f(a,b,dp,i,j+1,k)) || (f(a,b,dp,i+1,j,k))  || !(f(a,b,dp,i+1,j+1,k+1)));
     }
     else{
         dp[i][j][k]=((f(a,b,dp,i,j+1,k))||(f(a,b,dp,i+1,j,k)));
@@ -40,7 +40,7 @@ int f(vector<int>&a,vector<vector<int>>&b,vector<vector<vector<int>>>&dp,int i,i
 void solve(){
 
     int l,m,n;
-    cin>>l>>m>>n;
+    cin>>l>>n>>m;
     vector<int>a(l);
     for(int i=0;i<l;i++){
         cin>>a[i];
