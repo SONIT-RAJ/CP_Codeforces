@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 10:30:36 13-09-2025
+    created: 12:36:21 14-09-2025
 */
 
 
@@ -25,8 +25,35 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n;
-    cin>>n;
+    int n,k;
+    cin>>n>>k;
+    vector<int>a(n);
+    unordered_map<int,int>mpp;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        mpp[a[i]]++;
+    }
+    for(auto &x:mpp){
+        if(x.second%k){
+            cout<<0;
+            return;
+        }
+        x.second/=k;
+    }
+    int i=0;
+    int j=0;
+    int ans=0;
+    unordered_map<int,int>mpp2;
+    while(j<n){
+        mpp2[a[j]]++;
+        while(i<=j && mpp2[a[j]]>mpp[a[j]]){
+            mpp2[a[i]]--;
+            i++;
+        }
+        ans+=j-i+1;
+        j++;
+    }
+    cout<<ans;
 
 
 
