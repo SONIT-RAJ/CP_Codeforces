@@ -1,45 +1,66 @@
-/*
-   Author: SONIT RAJ
-    created: 10:30:36 13-09-2025
-*/
-
-
 #include<bits/stdc++.h>
 using namespace std;
-
-#pragma GCC optimize("Ofast,unroll-loops")
-#pragma GCC target("avx,avx2,fma")
-
-#define ll long long
 #define int long long
-#define rep(i,a,b) for(int i = a; i<b; i++)
-#define rew(x) for(int i = 0; i<x; i++)
-#define all(x) x.begin(), x.end()
-#ifdef ONLINE_JUDGE
-    #define de(...)
-    #define de2(...)
-#endif
-const ll inf = 2e18 + 5;
-const ll M = 1e9 + 7;
-#define PI 3.141592653589
-
-void solve(){
-
-    int n;
-    cin>>n;
-
-
-
-
-}
-
+#define fastio ios_base::sync_with_stdio(false);cin.tie(NULL)
+int mod=998244353;
+/*
+    coding time:-
+*/
 signed main(){
-    ios_base::sync_with_stdio(0);
-    cin.tie(0); cout.tie(0);
-    int t=1;
-    cin>>t;
-    while(t--){
-        solve();
-        cout<<"\n";
+    fastio;
+    #ifndef ONLINE_JUDGE
+    freopen("input.txt","r",stdin);
+    freopen("output.txt","w",stdout);
+    #endif
+    int T=1,N=2e5+5;
+    cin>>T;
+    for(int test=1;test<=T;test++){
+      int n;
+      cin>>n;
+      vector<int> v(n);
+      for(int i=0;i<n;i++){
+        cin>>v[i];
+      }
+      int l=0,r=0,best=0,ctn=0,cnt=0;
+      int left=n,right=0;
+      while(l<n){
+        while(l<n and v[l]==0)
+        l++;
+        if(l==n)
+        break;
+        int r=l;
+        while(r<n and v[r]!=0)
+        r++;
+        cnt=0;
+        ctn=0;
+        // ek baar left se right jaa kar dekhe
+        for(int i=l;i<r;i++){
+          if(v[i]<0)
+          ctn++;
+          if(abs(v[i])==2)
+          cnt++;
+          if(ctn%2==0 and cnt>best){
+            left=l;
+            right=n-i-1;
+            best=cnt;
+          }
+        }
+        cnt=0;ctn=0;
+        // ek baar right se left jaa kr dekhe
+        for(int i=r-1;i>=l;i--){
+          if(v[i]<0)
+          ctn++;
+          if(abs(v[i])==2)
+          cnt++;
+          if(ctn%2==0 and cnt>best){
+            left=i;
+            right=n-r;
+            best=cnt;
+          }
+        }
+        l=r+1;
+      }
+      cout<<left<<" "<<right<<endl;
     }
+    return 0;
 }
