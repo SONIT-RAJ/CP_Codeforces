@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 20:11:39 02-09-2025
+    created: 23:03:58 19-09-2025
 */
 
 
@@ -27,7 +27,7 @@ void solve(){
 
     int n;
     cin>>n;
-    de(n);
+
 
 
 
