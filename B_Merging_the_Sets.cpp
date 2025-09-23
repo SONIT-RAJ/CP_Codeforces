@@ -25,9 +25,34 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n;
-    cin>>n;
-
+    int n,m;
+    cin>>n>>m;
+    map<int,vector<int>>mpp;
+    for(int i=0;i<n;i++){
+        int l;
+        cin>>l;
+        for(int j=0;j<l;j++){
+            int x;
+            cin>>x;
+            mpp[x].push_back(i);
+        }
+    }
+    set<int>s;
+    for(int i=1;i<=m;i++){
+        if(mpp[i].empty()){
+            cout<<"NO";
+            return;
+        }
+        if(mpp[i].size()==1){
+            s.insert(mpp[i][0]);
+        }
+    }
+    if(n-s.size()>=2){
+        cout<<"YES";
+    }
+    else{
+        cout<<"NO";
+    }
 
 
 
