@@ -27,10 +27,50 @@ void solve(){
 
     int n;
     cin>>n;
+    vector<int>a[n+1];
+    vector<int>d(n+1,0);
+    int query=n-1;
+    while(query--){
+        int u,v,x,y;
+        cin>>u>>v>>x>>y;
+        if(x<y){
+            a[u].push_back(v);
+            d[v]++;
+        }
+        else{
+            a[v].push_back(u);
+            d[u]++;
+        }
 
-
-
-
+    }
+    queue<int>q;
+    for(int i=1;i<=n;i++){
+        if(d[i]==0){
+            q.push(i);
+        }
+    }
+    vector<int>ans;
+    ans.reserve(n);
+    while(!q.empty()){
+        int node=q.front();
+        ans.push_back(node);
+        q.pop();
+        for(auto &s:a[node]){
+            d[s]--;
+            if(d[s]==0){
+                q.push(s);
+            }
+        }
+    }
+    vector<int>result(n+1);
+    int j=1;
+    for(int i=0;i<n;i++){
+        result[ans[i]]=j;
+        j++;
+    }
+    for(int i=1;i<=n;i++){
+        cout<<result[i]<<" ";
+    }
 }
 
 signed main(){

@@ -33,11 +33,14 @@ int f(vector<int>&a,vector<vector<vector<int>>>&dp,int r,int b,int i){
         ans=f(a,dp,r,b,i+1)%M;
     }
     else if(a[i]<Red && a[i]>=Blue){
+
         ans=(f(a,dp,r,b,i+1)+f(a,dp,r,i,i+1))%M;
     }
     else if(a[i]<Blue && a[i]>=Red){
+
         ans=(f(a,dp,r,b,i+1)+f(a,dp,i,b,i+1))%M;
     }
+    
     else{
         if(Red>=Blue){
             ans=(f(a,dp,r,b,i+1)+f(a,dp,i,b,i+1))%M;
