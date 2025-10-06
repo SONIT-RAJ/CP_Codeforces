@@ -24,7 +24,19 @@ const ll M = 1e9 + 7;
 #define PI 3.141592653589
 
 void solve(){
-
+    int n;
+    cin>>n;
+    vector<vector<int>>a(n,vector<int>(3));
+    for(int i=0;i<n;i++){
+        cin>>a[i][0]>>a[i][1];
+        a[i][2]=i;
+    }
+    vector<int>b(n);
+    sort(a.begin(),a.end());
+    priority_queue<int>pq;
+    for(int i=0;i<n;i++){
+        
+    }
 }
 
 signed main(){
