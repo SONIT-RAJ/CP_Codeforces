@@ -1,14 +1,14 @@
 /*
    Author: SONIT RAJ
-    created: 09:16:49 16-10-2025
+    created: 22:05:59 16-10-2025
 */
 
 
 #include<bits/stdc++.h>
 using namespace std;
 
-#pragma GCC optimize("Ofast,unroll-loops")
-#pragma GCC target("avx,avx2,fma")
+#pragma GCC optimize("Ofast,unroll-loops") 
+#pragma GCC target("avx,avx2,fma") 
 
 #define ll long long
 #define int long long
@@ -25,18 +25,13 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n,c;
-    cin>>n>>c;
-    vector<int>b(n);
+    int n;
+    cin>>n;
+    vector<int>a(n);
     for(int i=0;i<n;i++){
-        cin>>b[i];
+        cin>>a[i];
     }
-    vector<int>d(n);
-    for(int i=0;i<n;i++){
-        cin>>d[i];
-    }
-
-
+    
 
 
 }
@@ -45,9 +40,7 @@ signed main(){
     ios_base::sync_with_stdio(0);
     cin.tie(0); cout.tie(0);
     int t=1;
-    cin>>t;
     while(t--){
         solve();
-        cout<<"\n";
     }
 }
