@@ -1,3 +1,9 @@
+/*
+   Author: SONIT RAJ
+    created: 13:04:41 19-10-2025
+*/
+
+
 #include<bits/stdc++.h>
 #include<ext/pb_ds/assoc_container.hpp>
 #include<ext/pb_ds/tree_policy.hpp>
@@ -136,23 +142,22 @@ void _print(const oms<T>& v) {
 }
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
+//Bits
+string decToBinary(ll n){string s="";ll i = 0;while (n > 0) {s =to_string(n % 2)+s;n = n / 2;i++;}return s;}
+ll binaryToDecimal(string n){string num = n;ll dec_value = 0;int base = 1;int len = num.length();for(int i = len - 1; i >= 0; i--){if (num[i] == '1')dec_value += base;base = base * 2;}return dec_value;}
 
-
-// Prime Check
-bool is_prime(ll n) {
-    if (n < 2) return false;
-    for (ll i = 2; i * i <= n; i++)
-        if (n % i == 0) return false;
-    return true;
-}
+//Check
+bool isPrime(ll n){if(n<=1)return false;if(n<=3)return true;if(n%2==0||n%3==0)return false;for(int i=5;i*i<=n;i=i+6)if(n%i==0||n%(i+2)==0)return false;return true;}
+bool isPowerOfTwo(int n){if(n==0)return false;return (ceil(log2(n)) == floor(log2(n)));}
+bool isPerfectSquare(ll x){if (x >= 0) {ll sr = sqrt(x);return (sr * sr == x);}return false;}
 
 // Sieve of Eratosthenes
 vector<int> sieve(int n) {
-    vector<int> primes(n + 1, 1), res;
-    primes[0] = primes[1] = 0;
+    vector<bool> primes(n + 1, true), res;
+    primes[0] = primes[1] = false;
     for (int i = 2; i * i <= n; i++) {
         if (primes[i]) {
-            for (int j = i * i; j <= n; j += i) primes[j] = 0;
+            for (int j = i * i; j <= n; j += i) primes[j] = false;
         }
     }
     for (int i = 2; i <= n; i++)
@@ -222,7 +227,7 @@ struct DSU {
 // ╭──────────────────────────────╮
 // │      GLOBAL ZONE             │
 // ╰──────────────────────────────╯
-// ALWAYS USE FIXED << SETPRECISION() WHILE OUTPUTTING FLOATS
+// ALWAYS USE cout << FIXED << SETPRECISION(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
 
@@ -237,6 +242,8 @@ void solve(){
     cin>>n;
     vector<int>a(n);
     cin>>a;
+
+
 
 
 }
