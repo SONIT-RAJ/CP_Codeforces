@@ -237,6 +237,7 @@ void solve(){
     cin>>n;
     vector<int>a(n);
     cin>>a;
+    cout<<a;
 
 
 }
