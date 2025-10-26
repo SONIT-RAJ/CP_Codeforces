@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 19:00:05 25-10-2025
+    created: 21:58:15 26-10-2025
 */
 
 
@@ -243,10 +243,23 @@ struct DSU {
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n;
-    cin>>n;
-    vector<int>a(n);
-    cin>>a;
+    int c=0;
+    vector<int>a={2,3,5,7,11,13,17,19,23,29,31,34,37,41,43,47,4,9,25,49};
+    string s;
+    for(int i=0;i<a.size();i++){
+        cout<<a[i]<<endlf;
+        cin>>s;
+        if(s=="yes"){
+            c++;
+        }
+    }
+    if(c>=2){
+        cout<<"composite"<<endlf;
+    }
+    else{
+        cout<<"prime"<<endlf;
+    }
+
 
 
 

@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 19:00:05 25-10-2025
+    created: 23:22:43 26-10-2025
 */
 
 
@@ -243,10 +243,32 @@ struct DSU {
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n;
-    cin>>n;
-    vector<int>a(n);
-    cin>>a;
+    int n,m;
+    cin>>n>>m;
+    vector<int>a[n+1];
+    for(int i=0;i<m;i++){
+        int u,v;
+        cin>>u>>v;
+        a[u].push_back(v);
+        a[v].push_back(u);
+    }
+    vector<int>v(n+1,-1);
+    v[1]=1;
+    pqg<int>q;
+    q.push(1);
+    while(!q.empty()){
+        int node=q.top();
+        q.pop();
+        cout<<node<<" ";
+        int mini=n+1;
+        for(auto &x:a[node]){
+            if(v[x]==-1){
+                q.push(x);
+                v[x]=1;
+            }
+        }
+    }
+
 
 
 

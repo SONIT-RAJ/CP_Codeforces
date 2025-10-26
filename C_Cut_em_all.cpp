@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 19:00:05 25-10-2025
+    created: 22:41:29 26-10-2025
 */
 
 
@@ -235,7 +235,20 @@ struct DSU {
 // ALWAYS USE cout << FIXED << SETPRECISION(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-
+int dfs(int i,vector<int>a[],vector<int>&v,int &maxi){
+    v[i]=1;
+    int ans=1;
+    for(auto &x:a[i]){
+        if(v[x]==-1){
+            ans+=dfs(x,a,v,maxi);
+        }
+    }
+    if(ans%2==0){
+        maxi++;
+        ans=0;
+    }
+    return ans;
+}
 
 
 // ╭──────────────────────────────╮
@@ -245,8 +258,21 @@ void solve(){
 
     int n;
     cin>>n;
-    vector<int>a(n);
-    cin>>a;
+    vector<int>a[n+1];
+    for(int i=0;i<n-1;i++){
+        int u,v;
+        cin>>u>>v;
+        a[u].push_back(v);
+        a[v].push_back(u);
+    }
+    if(n%2){
+        cout<<-1;
+        return;
+    }
+    vector<int>v(n+1,-1);
+    int maxi=0;
+    dfs(1,a,v,maxi);
+    cout<<maxi-1;
 
 
 

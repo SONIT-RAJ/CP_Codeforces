@@ -235,7 +235,20 @@ struct DSU {
 // ALWAYS USE cout << FIXED << SETPRECISION(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
+int maxi=-1;
+void dfs(vector<int>a[],map<pair<int,int>,int>&mpp,int i,int r,int p){
+    maxi=max(maxi,r);
+    for(auto &x:a[i]){
+        if(x==p)continue;
+        if(mpp[{p,i}]<mpp[{i,x}]){
+            dfs(a,mpp,x,r,i);
+        }
+        else{
+            dfs(a,mpp,x,r+1,i);
+        }
+    }
 
+}
 
 
 // ╭──────────────────────────────╮
@@ -245,9 +258,21 @@ void solve(){
 
     int n;
     cin>>n;
-    vector<int>a(n);
-    cin>>a;
-
+    vector<int>a[n+1];
+    map<pair<int,int>,int>mpp;
+    for(int i=0;i<n-1;i++){
+        int u,v;
+        cin>>u>>v;
+        a[u].push_back(v);
+        a[v].push_back(u);
+        mpp[{u,v}]=i;
+        mpp[{v,u}]=i;
+    }
+    mpp[{1,-1}]=-1;
+    mpp[{-1,1}]=-1;
+    dfs(a,mpp,1,1,-1);
+    cout<<maxi;
+    maxi=-1;
 
 
 
