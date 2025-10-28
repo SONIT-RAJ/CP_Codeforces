@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 19:00:05 25-10-2025
+    created: 17:24:18 27-10-2025
 */
 
 
@@ -235,7 +235,20 @@ struct DSU {
 // ALWAYS USE cout << FIXED << SETPRECISION(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-
+void dfs(vector<int>a[],int i,map<pair<int,int>,int>&mpp,vector<int>&v){
+    v[i]=1;
+    bool flag=true;
+    for(auto &x:a[i]){
+        if(v[x]==-1){
+            flag=false;
+            dfs(a,x,mpp,v);
+        }
+    }
+    if(flag || a[i].size()==1){
+        mpp[{i,a[i][0]}]=0;
+        mpp[{a[i][0],i}]=0;
+    }
+}
 
 
 // ╭──────────────────────────────╮
@@ -245,8 +258,36 @@ void solve(){
 
     int n;
     cin>>n;
-    vector<int>a(n);
-    cin>>a;
+    vector<int>a[n+1];
+    map<pair<int,int>,int>mpp;
+    vector<pair<int,int>>p;
+    p.reserve(n-1);
+    for(int i=0;i<n-1;i++){
+        int u,v;
+        cin>>u>>v;
+        p.push_back({u,v});
+        mpp[{u,v}]=1;
+        mpp[{v,u}]=1;
+        a[u].push_back(v);
+        a[v].push_back(u);
+    }
+    vector<int>v(n+1,-1);
+    dfs(a,1,mpp,v);
+    int low=0;
+    vector<int>ans(n-1,-1);
+    for(int i=0;i<n-1;i++){
+        if(mpp[p[i]]==0){
+            ans[i]=low++;
+        }
+    }
+    for(int i=0;i<n-1;i++){
+        if(ans[i]==-1){
+            cout<<low++<<endl;
+        }
+        else{
+            cout<<ans[i]<<endl;
+        }
+    }
 
 
 
