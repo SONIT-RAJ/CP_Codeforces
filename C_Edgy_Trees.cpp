@@ -235,7 +235,16 @@ struct DSU {
 // ALWAYS USE cout << FIXED << SETPRECISION(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-
+int dfs(vector<int>a[],vector<int>&v,int i){
+    v[i]=1;
+    int ans=1;
+    for(auto &x:a[i]){
+        if(v[x]==-1){
+            ans+=dfs(a,v,x);
+        }
+    }
+    return ans;
+}
 
 
 // ╭──────────────────────────────╮
@@ -243,10 +252,29 @@ struct DSU {
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n;
-    cin>>n;
-    vector<int>a(n);
-    cin>>a;
+    int n,k;
+    cin>>n>>k;
+    vector<int>a[n+1];
+    for(int i=0;i<n-1;i++){
+        int u,v,c;
+        cin>>u>>v>>c;
+        if(c==0){
+            a[u].push_back(v);
+            a[v].push_back(u);
+        }
+    }
+
+    vector<int>v(n+1,-1);
+    int ans=0;
+    for(int i=1;i<=n;i++){
+        if(v[i]==-1){
+            int val=power(dfs(a,v,i),k,mod);
+            dbg(val);
+            ans=(ans+val)%mod;
+        }
+    }
+    ans=(power(n,k,mod)-ans+mod)%mod;
+    cout<<ans;
 
 
 
@@ -259,9 +287,7 @@ signed main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     // precomp_fact();  // Enable if using nCr or factorials
     int _=1;
-    cin>>_;
     while(_--){
         solve();
-        cout<<"\n";
     }
 }
