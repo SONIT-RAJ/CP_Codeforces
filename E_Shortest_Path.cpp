@@ -235,9 +235,6 @@ struct DSU {
 // ALWAYS USE cout << FIXED << SETPRECISION(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-
-
-
 // ╭──────────────────────────────╮
 // │        SOLVER ZONE           │
 // ╰──────────────────────────────╯
@@ -246,44 +243,55 @@ void solve(){
     int n,m,k;
     cin>>n>>m>>k;
     vector<int>a[n+1];
-    for(int i=0;i<m;i++){
+    for(int i=0;i<m;i++){//  O(m)
         int u,v;
         cin>>u>>v;
         a[u].push_back(v);
         a[v].push_back(u);
     }
     set<vector<int>>s;
-    for(int i=0;i<k;i++){
+    for(int i=0;i<k;i++){//  O(k)
         int x,y,z;
         cin>>x>>y>>z;
-        s.insert({x,y,z});
+        s.insert({z,y,x});
     }
-    vector<int>d(n+1,-1);
-    d[1]=0;
-    vector<int>c(n+1,0);
-    c[1]=1;
-    queue<pair<int,int>>q;
-    q.push({0,1});
-    while(!q.empty()){
-        pair<int,int>temp=q.front();
-        q.pop();
-        int parent=temp.first;
-        int node=temp.second;
-        for(auto &children:a[node]){
-            if((d[children]==-1 || d[children]==d[node]+1) && s.find({parent,node,children})==s.end()){
-                d[children]=d[node]+1;
-                c[children]++;
-                q.push({node,children});
+    map<pair<int,int>,pair<int,int>>mpp;
+    mpp[{1,0}]={0,0};
+    pqg<vector<int>>pq;
+    pq.push({0,1,0});
+    while(!pq.empty()){//  O(m)
+        auto t=pq.top();
+        int dis=t[0];
+        int node=t[1];
+        int parent=t[2];
+        pq.pop();
+        if(node==n){
+            cout<<dis<<"\n";
+            vector<int>ans;
+            ans.reserve(dis+1);
+            while(node>0){//  O(m * log(m))
+                ans.push_back(node);
+                auto temp=mpp[{node,parent}];
+                node=temp.first;
+                parent=temp.second;
+            }
+            for(int i=ans.size()-1;i>=0;i--){
+                cout<<ans[i]<<" ";
+            }
+            return;
+        }
+        for(auto &children:a[node]){//  O(n*(log(m)+log(k))
+            if(mpp.find({children,node})==mpp.end() && s.count({children,node,parent})==0){
+                mpp[{children,node}]={node,parent};
+                pq.push({dis+1,children,node});
             }
         }
-    }
-    if(d[n]==-1){
-        cout<<1;
-        return;
-    }
-    cout<<c[n]<<endl;
 
+    }
+    cout<<-1;
 
+//tc - O(m*n*(log(m)+log(k)))
+//sc - O(n+m+k)
 
 
 }
