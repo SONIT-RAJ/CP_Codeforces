@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 23:52:44 18-11-2025
+    created: 23:53:30 18-11-2025
 */
 
 
@@ -235,7 +235,38 @@ struct DSU {
 // ALWAYS USE cout << FIXED << SETPRECISION(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
+int make_query(vector<int>&a,int i){
+    int k=0;
+    int q;
+    for(int j=0;j<=i;j++){
+        if(a[j]==0){
+            k++;
+        }
+    }
+    cout<<"? "<<k<<" ";
+    for(int j=0;j<=i;j++){
+        if(a[j]==0){
+            cout<<j+1<<" ";
+        }
+    }
+    cout<<endlf;
+    cin>>q;
+    return q;
 
+}
+int make_final_query(vector<int>&a,vector<int>&ans,int i,int n){
+    cout<<"? "<<n+1<<" ";
+    int q;
+    for(int j=0;j<2*n;j++){
+        if(a[j]){
+            cout<<j+1<<" ";
+        }
+    }
+    cout<<i+1<<endlf;
+    cin>>q;
+    return q;
+
+}
 
 
 // ╭──────────────────────────────╮
@@ -245,8 +276,19 @@ void solve(){
 
     int n;
     cin>>n;
-    vector<int>a(n);
-    cin>>a;
+    vector<int>a(2*n,0);
+    for(int i=0;i<2*n;i++){
+        a[i]=make_query(a,i);
+    }
+    vector<int>ans=a;
+    for(int i=0;i<2*n;i++){
+        if(ans[i]==0)ans[i]=make_final_query(a,ans,i,n);
+    }
+    cout<<"! ";
+    for(int i=0;i<2*n;i++){
+        cout<<ans[i]<<" ";
+    }
+    cout<<endlf;
 
 
 
@@ -262,6 +304,5 @@ signed main(){
     cin>>_;
     while(_--){
         solve();
-        cout<<"\n";
     }
 }

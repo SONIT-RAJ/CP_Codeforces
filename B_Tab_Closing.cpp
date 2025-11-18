@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 23:52:44 18-11-2025
+    created: 14:24:12 18-11-2025
 */
 
 
@@ -243,10 +243,14 @@ struct DSU {
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n;
-    cin>>n;
-    vector<int>a(n);
-    cin>>a;
+    int a,b,n;
+    cin>>a>>b>>n;
+    if(b<=a/n || a<=b){
+        cout<<1;
+    }
+    else{
+        cout<<2;
+    }
 
 
 

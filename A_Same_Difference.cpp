@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 23:52:44 18-11-2025
+    created: 14:19:50 18-11-2025
 */
 
 
@@ -245,8 +245,15 @@ void solve(){
 
     int n;
     cin>>n;
-    vector<int>a(n);
-    cin>>a;
+    string s;
+    cin>>s;
+    int c=0;
+    for(int i=n-2;i>=0;i--){
+        if(s[i]==s[n-1]){
+            c++;
+        }
+    }
+    cout<<n-c-1;
 
 
 
