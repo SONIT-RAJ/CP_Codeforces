@@ -235,7 +235,15 @@ struct DSU {
 // ALWAYS USE cout << FIXED << SETPRECISION(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-
+bool q(int low,int mid){
+    int first;
+    int second;
+    cout<<"1 "<<low<<" "<<mid<<endlf;
+    cin>>first;
+    cout<<"2 "<<low<<" "<<mid<<endlf;
+    cin>>second;
+    if(second-first)
+}
 
 
 // ╭──────────────────────────────╮
@@ -245,8 +253,27 @@ void solve(){
 
     int n;
     cin>>n;
-    vector<int>a(n);
-    cin>>a;
+    int total=n*(n+1)/2;
+    cout<<"2 1 n"<<endlf;
+    int length;
+    cin>>length;
+    length-=total;
+    int low=1;
+    int high=(n+1)/2;
+    int left=-1;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        if(q(low,mid)){
+            left=mid;
+
+        }
+        else{
+
+        }
+    }
+    cout<<"! "<<left<<" "<<left+length-1<<endlf;
+
+
 
 
 
@@ -262,6 +289,5 @@ signed main(){
     cin>>_;
     while(_--){
         solve();
-        cout<<"\n";
     }
 }
