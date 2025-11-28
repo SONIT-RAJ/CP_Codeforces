@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 00:21:02 29-11-2025
+    created: 01:02:10 29-11-2025
 */
 
 
@@ -243,15 +243,9 @@ struct DSU {
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n,l,r;
-    cin>>n>>l>>r;
-    vector<int>a(n);
-    cin>>a;
-    sort(a.begin(),a.end());
-    if(l<=a[0] || r>=a[n-1]){
-        cout<<0;
-        return;
-    }
+    int n,x;
+    cin>>n>>x;
+    cout<<x+(n-1)*9;
 
 
 
