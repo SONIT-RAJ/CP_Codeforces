@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 21:56:24 25-12-2025
+    created: 21:25:11 26-12-2025
 */
 
 
@@ -235,54 +235,52 @@ struct DSU {
 // ALWAYS USE cout << fixed << setprecision(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-int dfs(vector<int>a[],vector<int>&dp,vector<int>&lev,int i,int p,int level){
-    lev[i]=level;
-    int ans=0;
-    for(auto &x:a[i]){
-        if(x!=p){
-            ans+=dfs(a,dp,lev,x,i,level+1);
-        }
-    }
-    dp[i]=ans;
-    return ans+1;
-}
+
+
+
 // ╭──────────────────────────────╮
 // │        SOLVER ZONE           │
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n,k;
-    cin>>n>>k;
-
-    vector<int>a[n+1];
-    vector<int>dp(n+1,0);
-    vector<int>lev(n+1,0);
-
-    for(int i=0;i<n-1;i++){
-        int u,v;
-        cin>>u>>v;
-        a[u].push_back(v);
-        a[v].push_back(u);
+    int n;
+    cin>>n;
+    vector<int>a(n);
+    cin>>a;
+    sort(a.begin(),a.end());
+    int v=a[n-1]-a[0];
+    if(v==0){
+        cout<<"NO";
+        return;
     }
-
-    dfs(a,dp,lev,1,0,0);
-
-    vector<int>pq(n+1);
-    for(int i=1;i<=n;i++){
-        pq[i]=lev[i]-dp[i];
+    int i=1;
+    int j=n-1;
+    vector<int>ans(n);
+    ans[0]=a[0];
+    int maxi=a[0];
+    int mini=a[0];
+    for(int k=1;k<n;k++){
+        int temp_mini_i=abs(mini+a[i]);
+        int temp_maxi_i=abs(maxi+a[i]);
+        int new_i=max(temp_mini_i,temp_maxi_i);
+        int temp_mini_j=abs(mini+a[j]);
+        int temp_maxi_j=abs(maxi+a[j]);
+        int new_j=max(temp_mini_j,temp_maxi_j);
+        if(min(new_i,new_j)>=v){
+            cout<<"NO";
+            return;
+        }
+        if(new_i<=new_j){
+            ans[k]=a[i++];
+        }
+        else{
+            ans[k]=a[j--];
+        }
+        mini=min(mini+ans[k],ans[k]);
+        maxi=max(maxi+ans[k],ans[k]);
     }
-
-    sort(pq.begin()+1,pq.end(),greater<int>());
-
-    int ans=0;
-    for(int i=1;i<=n && k>0;i++){
-        ans+=pq[i];
-        k--;
-    }
+    cout<<"YES"<<endl;
     cout<<ans;
-
-
-
 
 
 
@@ -294,7 +292,9 @@ signed main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     // precomp_fact();  // Enable if using nCr or factorials
     int _=1;
+    cin>>_;
     while(_--){
         solve();
+        cout<<"\n";
     }
 }
