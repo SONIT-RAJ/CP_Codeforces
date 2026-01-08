@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 20:13:12 08-01-2026
+    created: 17:37:24 09-01-2026
 */
 
 
@@ -235,17 +235,7 @@ struct DSU {
 // ALWAYS USE cout << fixed << setprecision(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-int q(int low,int high){
-    int c=0;
-    int x;
-    cout<<"? "<<low<<" "<<high<<endlf;
-    for(int i=low;i<=high;i++){
-        cin>>x;
-        if(x>=low && x<=high)c++;
-    }
-    return c;
 
-}
 
 
 // ╭──────────────────────────────╮
@@ -255,22 +245,23 @@ void solve(){
 
     int n;
     cin>>n;
-    int high=n;
-    int low=1;
-    while(high-low>1){
-        int mid=low+(high-low)/2;
-        if(q(low,mid)%2==1){
-            high=mid;
+    vector<bool>dp(n+1,false);
+    dp[0]=true;
+    int x;
+    for(int i=1;i<=n;i++){
+        cin>>x;
+        if(i-1>=0 && dp[i-1]==true){
+            if(i+x<=n)dp[i+x]=true;
         }
-        else{
-            low=mid+1;
+        if(i-x-1>=0 && dp[i-x-1]==true){
+            dp[i]=true;
         }
     }
-    if(q(low,low)%2==1){
-        cout<<"! "<<low<<endlf;
+    if(dp[n]==true){
+        cout<<"YES";
     }
     else{
-        cout<<"! "<<high<<endlf;
+        cout<<"NO";
     }
 
 
@@ -287,5 +278,6 @@ signed main(){
     cin>>_;
     while(_--){
         solve();
+        cout<<"\n";
     }
 }
