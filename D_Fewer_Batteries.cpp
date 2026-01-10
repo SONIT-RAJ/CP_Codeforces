@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 00:01:23 10-01-2026
+    created: 00:36:29 10-01-2026
 */
 
 
@@ -235,11 +235,19 @@ struct DSU {
 // ALWAYS USE cout << fixed << setprecision(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-int q(int i,int j){
-    int r;
-    cout<<"? "<<i<<" "<<j<<endlf;
-    cin>>r;
-    return r;
+bool check(vector<pair<int,int>>a[],vector<int>&b,int &n,int &mid){
+    vector<int>dp(n+1,-1);
+    dp[1]=min(mid,b[1]);
+    for(int i=2;i<=n;i++){
+        for(auto &x:a[i]){
+            int j=x.first;
+            int w=x.second;
+            if(w<=dp[j]){
+                dp[i]=max(dp[i],min(mid,dp[j]+b[i]));
+            }
+        }
+    }
+    return dp[n]<=mid && dp[n]!=-1;
 }
 
 
@@ -248,47 +256,32 @@ int q(int i,int j){
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n;
-    cin>>n;
-    int v=2*n;
-    vector<int>a(n+1,0);
-    unordered_set<int>s;
+    int n,m;
+    cin>>n>>m;
+    vector<int>b(n+1);
     for(int i=1;i<=n;i++){
-        s.insert(i);
+        cin>>b[i];
     }
-    int i=1;
-    int j=2;
-    while(v>2){
-        int r1=q(i,j);
-        int r2=q(j,i);
-        if(r1>r2){
-            a[i]=r1;
-            s.erase(r1);
-            i=j;
-            j++;
+    vector<pair<int,int>>a[n+1];
+    for(int i=0;i<m;i++){
+        int s,t,w;
+        cin>>s>>t>>w;
+        a[t].push_back({s,w});
+    }
+    int low=0;
+    int high=1e9;
+    int ans=-1;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        if(check(a,b,n,mid)){
+            ans=mid;
+            high=mid-1;
         }
         else{
-            a[j]=r2;
-            s.erase(r1);
+            low=mid+1;
         }
-        v-=2;
-        if(v<=2)break;
-        while(a[j]!=0){
-            j++;
-        }
-
     }
-    if(a[i]==0){
-        a[i]=*s.begin();
-    }
-    else{
-        a[j]=*s.begin();
-    }
-    cout<<"! ";
-    for(int i=1;i<=n;i++){
-        cout<<a[i]<<" ";
-    }
-    cout<<endlf;
+    cout<<ans;
 
 
 
@@ -302,7 +295,9 @@ signed main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     // precomp_fact();  // Enable if using nCr or factorials
     int _=1;
+    cin>>_;
     while(_--){
         solve();
+        cout<<"\n";
     }
 }
