@@ -9,7 +9,7 @@
 using namespace std;
 #pragma GCC optimize("Ofast,unroll-loops,O3,no-stack-protector,fast-math")
 #pragma GCC target("avx,avx2,fma,sse4")
-
+#define int long long
 void solve(){
 
     int r,c;
