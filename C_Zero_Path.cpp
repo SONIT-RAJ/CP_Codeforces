@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 11:14:08 03-02-2026
+    created: 20:40:17 04-02-2026
 */
 
 
@@ -235,12 +235,7 @@ struct DSU {
 // ALWAYS USE cout << fixed << setprecision(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-bool cmp(vector<int>&a,vector<int>&b){
-    if(a[1]!=b[1]){
-        return a[1]<b[1];
-    }
-    return a[0]<b[0];
-}
+
 
 
 // ╭──────────────────────────────╮
@@ -248,53 +243,44 @@ bool cmp(vector<int>&a,vector<int>&b){
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n,k;
-    cin>>n>>k;
-    vector<vector<int>>a(n,vector<int>(2));
-    for(int i=0;i<n;i++){
-        cin>>a[i][0];
-    }
-    for(int i=0;i<n;i++){
-        cin>>a[i][1];
-    }
-    sort(a.begin(),a.end());
-    os<pair<int,int>>pre;
-    int ans=0;
-    int id=0;
-    for(int i=0;i<n;i++){
-        int p=a[i][0];
-        int front=p*(n-i);
-        int cnt=pre.order_of_key({p,-1});
-        cnt=(pre.size()-cnt);
-        if(cnt>k){
-            pre.insert({a[i][1],id++});
-            continue;
+    int r,c;
+    cin>>r>>c;
+    vector<vector<int>>a(r,vector<int>(c));
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            cin>>a[i][j];
         }
-        int back=cnt*p;
-        ans=max(ans,front+back);
-        pre.insert({a[i][1],id++});
     }
-    sort(a.begin(),a.end(),cmp);
-    os<pair<int,int>>pre2;
-    id=0;
-    for(int i=n-1;i>=0;i--){
-        if(i!=0 && a[i][1]==a[i-1][1]){
-            pre2.insert({a[i][0],id++});
-            continue;
-        }
-        int p=a[i][1];
-        int cnt=pre2.order_of_key({p,-1});
-        cnt=pre2.size()-cnt;
-        int val=p*cnt;
-        if(n-i-cnt>k){
-            pre2.insert({a[i][0],id++});
-            continue;
-        }
-        int left=(n-i-cnt)*p;
-        ans=max(ans,left+val);
-        pre2.insert({a[i][0],id++});
+    if((r+c-1)%2==1){
+        cout<<"NO";
+        return;
     }
-    cout<<ans;
+    vector<vector<int>>dp1(r,vector<int>(c,0));
+    dp1[0][0]=a[0][0];
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            if(i==0 && j==0)continue;
+            int left=(j-1>=0)?dp1[i][j-1]:INT_MIN;
+            int up=(i-1>=0)?dp1[i-1][j]:INT_MIN;
+            dp1[i][j]=a[i][j]+max(up,left);
+        }
+    }
+    vector<vector<int>>dp2(r,vector<int>(c,0));
+    dp2[0][0]=a[0][0];
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            if(i==0 && j==0)continue;
+            int left=(j-1>=0)?dp2[i][j-1]:INT_MAX;
+            int up=(i-1>=0)?dp2[i-1][j]:INT_MAX;
+            dp2[i][j]=a[i][j]+min(up,left);
+        }
+    }
+    if(dp1[r-1][c-1]*dp2[r-1][c-1]<=0){
+        cout<<"YES";
+    }
+    else{
+        cout<<"NO";
+    }
 
 
 
