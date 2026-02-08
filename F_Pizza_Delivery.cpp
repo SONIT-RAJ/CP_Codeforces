@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 12:42:22 29-11-2025
+    created: 13:29:56 06-02-2026
 */
 
 
@@ -232,18 +232,10 @@ struct DSU {
 // ╭──────────────────────────────╮
 // │      GLOBAL ZONE             │
 // ╰──────────────────────────────╯
-// ALWAYS USE cout << FIXED << SETPRECISION(value) <<NUMBER; WHILE OUTPUTTING FLOATS
+// ALWAYS USE cout << fixed << setprecision(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-int n,q;
-string a;
-int s=0,t=0,u=0,v=0;
-void solve2(){
-    int x,y,z;
-    cin>>x>>y>>z;
-    
 
-}
 
 
 // ╭──────────────────────────────╮
@@ -251,31 +243,49 @@ void solve2(){
 // ╰──────────────────────────────╯
 void solve(){
 
-    cin>>n>>q;
-    cin>>a;
-    s=0;
-    t=0;
-    u=0;
-    v=0;
-    for(int i=0;i<n;i++){
-        if(a[i]=='X'){
-            s++;
-        }
-        else if(a[i]=='V'){
-            t++
-        }
-        else if(a[i]=='I'){
-            u++;
+    int n;
+    cin>>n;
+    vector<vector<int>>a(n+2,vector<int>(2));
+    cin>>a[0][0]>>a[0][1]>>a[n+1][0]>>a[n+1][1];
+    set<int>s;
+    s.insert(a[0][0]);
+    s.insert(a[n+1][0]);
+    for(int i=1;i<=n;i++){
+        cin>>a[i][0];
+        s.insert(a[i][0]);
+    }
+    for(int i=1;i<=n;i++){
+        cin>>a[i][1];
+    }
+    int size=s.size();
+    sort(a.begin(),a.end());
+    vector<int>top;
+    vector<int>bot;
+    vector<int>x;
+    x.reserve(size);
+    top.reserve(size);
+    bot.reserve(size);
+    top.push_back(a[0][1]);
+    bot.push_back(a[0][1]);
+    x.push_back(a[0][0]);
+    for(int i=1;i<n+2;i++){
+        if(a[i][0]==a[i-1][0]){
+            top[top.size()-1]=a[i][1];
         }
         else{
-            v++;
+            x.push_back(a[i][0]);
+            top.push_back(a[i][1]);
+            bot.push_back(a[i][1]);
         }
     }
-    while(q--){
-        solve2();
-        cout<<"\n";
+    vector<vector<int>>dp(size,vector<int>(2));
+    dp[0][0]=0;
+    dp[0][1]=0;
+    for(int i=1;i<size;i++){
+        dp[i][0]=top[i]-bot[i]+x[i]-x[i-1]+min(dp[i-1][0]+abs(top[i]-bot[i-1]),dp[i-1][1]+abs(top[i]-top[i-1]));
+        dp[i][1]=top[i]-bot[i]+x[i]-x[i-1]+min(dp[i-1][0]+abs(bot[i]-bot[i-1]),dp[i-1][1]+abs(bot[i]-top[i-1]));
     }
-    
+    cout<<dp[size-1][1];
 
 
 
@@ -290,5 +300,6 @@ signed main(){
     cin>>_;
     while(_--){
         solve();
+        cout<<"\n";
     }
 }
