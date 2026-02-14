@@ -235,14 +235,7 @@ struct DSU {
 // ALWAYS USE cout << fixed << setprecision(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-vector<vector<int>>f(1e6+1);
-void pre(){
-    for(int i=1;i<=1e6;i++){
-        for(int j=i;j<=1e6;j+=i){
-            f[j].push_back(i);
-        }
-    }
-}
+
 
 
 // ╭──────────────────────────────╮
@@ -253,25 +246,19 @@ void solve(){
     int n;
     cin>>n;
     vector<int>a(n);
-    cin>>a;
-    sort(a.begin(),a.end());
     map<int,int>mpp;
+    int maxi=0;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        maxi=max(maxi,a[i]);
+        mpp[a[i]]++;
+    }
     int ans=0;
     for(int i=0;i<n;i++){
         int num=a[i];
-        for(int j=1;j<f[num].size();j++){
-            int b=f[num][j];
-            if(num%(b*b)!=0)continue;
-            int req_1=num/b;
-            int req_2=num/(b*b);
-            ans+=(mpp[req_1]*mpp[req_2]);
-        }
-        mpp[num]++;
-    }
-    for(auto &x:mpp){
-        int val=x.second;
-        if(val>=3){
-            ans+=val*(val-1)*(val-2);
+        ans+=(mpp[num]-1)*(mpp[num]-2);
+        for(int b=2;num*b*b<=maxi;b++){
+            ans+=(mpp[num*b])*(mpp[num*b*b]);
         }
     }
     cout<<ans;
@@ -286,7 +273,6 @@ signed main(){
     // precomp_fact();  // Enable if using nCr or factorials
     int _=1;
     cin>>_;
-    pre();
     while(_--){
         solve();
         cout<<"\n";
