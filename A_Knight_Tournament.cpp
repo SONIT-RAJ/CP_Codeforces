@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 21:08:31 16-02-2026
+    created: 20:40:02 17-02-2026
 */
 
 
@@ -235,27 +235,7 @@ struct DSU {
 // ALWAYS USE cout << fixed << setprecision(value) <<NUMBER; WHILE OUTPUTTING FLOATS
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
-bool check(string &s,int n,int t){
-    int p=-1;
-    bool flag=true;
-    for(int i=0;i<n;i++){
-        if(s[i]=='*'){
-            if(flag && i>=p){
-                p=i;
-                flag=false;
-            }
 
-        }
-        else if(s[i]=='P'){
-            int d=(flag)?0:i-p;
-            if(d>t)return false;
-            int e=max(t-2*d,(t-d)/2);
-            p=i+e+1;
-            flag=true;
-        }
-    }
-    return flag;
-}
 
 
 // ╭──────────────────────────────╮
@@ -265,22 +245,8 @@ void solve(){
 
     int n;
     cin>>n;
-    string s;
-    cin>>s;
-    int low=1;
-    int high=2*n;
-    int ans=high;
-    while(low<=high){
-        int mid=low+(high-low)/2;
-        if(check(s,n,mid)){
-            ans=mid;
-            high=mid-1;
-        }
-        else{
-            low=mid+1;
-        }
-    }
-    cout<<ans;
+    vector<int>a(n);
+    cin>>a;
 
 
 
@@ -293,7 +259,9 @@ signed main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     // precomp_fact();  // Enable if using nCr or factorials
     int _=1;
+    cin>>_;
     while(_--){
         solve();
+        cout<<"\n";
     }
 }
