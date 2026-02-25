@@ -243,10 +243,10 @@ struct DSU {
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n;
-    cin>>n;
-    vector<int>a(n);
-    cin>>a;
+    int n,k;
+    cin>>n>>k;
+    vector<vector<int>>dp(k,vector<int>(2));
+
 
 
 
