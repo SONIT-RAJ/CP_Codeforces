@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 09:30:56 12-03-2026
+    created: 22:48:17 15-03-2026
 */
 
 
@@ -246,8 +246,17 @@ void solve(){
     int n;
     cin>>n;
     vector<int>a(n);
-    cin>>a;
-    
+    vector<int>b(n);
+    for(int i=0;i<n;i++){
+        cin>>a[i]>>b[i];
+    }
+    vector<long double>dp(n);
+    dp[n-1]=a[n-1];
+    for(int i=n-2;i>=0;i--){
+        dp[i]=max(dp[i+1],a[i]+(1-(b[i]/100.00))*dp[i+1]);
+    }
+    cout << fixed << setprecision(10) <<dp[0];
+
 
 
 

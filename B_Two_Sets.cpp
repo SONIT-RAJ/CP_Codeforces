@@ -277,7 +277,7 @@ void solve(){
         adj[d.find(i)].push_back(i);
     }
     vector<int>ans(n);
-    for(int i=0;i<n;i++){
+    for(int i=0;i<n;i++){cd 
         if(adj[i].size()>0){
             if(check(adj[i],a,s,arr)){
                 for(int j=0;j<adj[i].size();j++){
