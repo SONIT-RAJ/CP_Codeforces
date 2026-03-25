@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 17:12:03 18-02-2026
+    created: 12:35:30 25-03-2026
 */
 
 
@@ -236,7 +236,11 @@ struct DSU {
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
 
+vector<int>seg();
 
+void build(){
+
+}
 
 // ╭──────────────────────────────╮
 // │        SOLVER ZONE           │
@@ -247,6 +251,17 @@ void solve(){
     cin>>n;
     vector<int>a(n);
     cin>>a;
+    int t;
+    cin>>t;
+    while(t--){
+        int l,r;
+        cin>>l>>r;
+        l--;
+        r--;
+        int g = query(l,r);
+        int
+
+    }
 
 
 
@@ -259,9 +274,7 @@ signed main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     // precomp_fact();  // Enable if using nCr or factorials
     int _=1;
-    cin>>_;
     while(_--){
         solve();
-        cout<<"\n";
     }
 }
