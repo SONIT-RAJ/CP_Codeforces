@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 12:35:30 25-03-2026
+    created: 00:43:31 26-03-2026
 */
 
 
@@ -236,36 +236,6 @@ struct DSU {
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
 
-vector<int>seg;
-
-void build(vector<int>&a,int i,int l,int r){
-    if(l==r){
-        seg[i]=a[l];
-        return;
-    }
-
-    int mid=l+(r-l)/2;
-
-    build(a,2*i+1,l,mid);
-    build(a,2*i+2,mid+1,r);
-
-    seg[i]=__gcd(seg[2*i+1],seg[2*i+2]);
-
-}
-
-int query(int i,int l,int r,int start,int end){
-    if(l>end || r<start){
-        return 0;
-    }
-    if(l<=start && end<=r){
-        return seg[i];
-    }
-
-    int mid=start+(end-start)/2;
-    int left=query(2*i+1,l,r,start,mid);
-    int right=query(2*i+2,l,r,mid+1,end);
-    return __gcd(left,right);
-}
 
 
 
@@ -276,36 +246,50 @@ void solve(){
 
     int n;
     cin>>n;
-    vector<int>a(n);
-    map<int,vector<int>>mpp;
+
+    vector<int>p(1e6+1);
+    p[0]=1;
+    for(int i=1;i<=1e6;i++){
+        p[i]=(p[i-1]*2)%mod;
+    }
+
+    vector<int>c(1e6+1,0);
     for(int i=0;i<n;i++){
-        cin>>a[i];
-        mpp[a[i]].push_back(i);
-    }
-    seg.resize(4*n);
-    build(a,0,0,n-1);
-    int t;
-    cin>>t;
-    while(t--){
-        int l,r;
-        cin>>l>>r;
-        l--;
-        r--;
-        int d=r-l+1;
-        int g = query(0,l,r,0,n-1);
-        if(mpp.find(g)==mpp.end()){
-            cout<<d<<endl;
-            continue;
+        int x;
+        cin>>x;
+        for(int j=1;j*j<=x;j++){
+            if(x%j==0){
+                c[j]++;
+                if(j!=x/j){
+                    c[x/j]++;
+                }
+            }
         }
-        auto it = upper_bound(mpp[g].begin(),mpp[g].end(),r);
-        int right=it-mpp[g].begin();
-
-        it = lower_bound(mpp[g].begin(),mpp[g].end(),l);
-        int left=it-mpp[g].begin();
-
-        cout<<d-(right-left)<<endl;
-
     }
+
+
+    int ans=0;
+
+    for(int i=2;i<=1e6;i++){
+        if(c[i]==0)continue;
+        c[i]=(c[i]*p[c[i]-1])%mod;
+    }
+
+    for(int i=1e6;i>1;i--){
+        if(c[i]==0)continue;
+        for(int j=2*i;j<=1e6;j+=i){
+            c[i]=(c[i]-c[j]+mod)%mod;
+        }
+    }
+
+    for(int i=2;i<=1e6;i++){
+        int val=(i*c[i])%mod;
+        ans=(ans+val)%mod;
+    }
+
+    cout<<ans;
+
+
 
 
 
