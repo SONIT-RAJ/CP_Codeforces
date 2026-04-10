@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 01:46:20 10-04-2026
+    created: 00:52:43 11-04-2026
 */
 
 
@@ -236,17 +236,62 @@ struct DSU {
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
 
+vector<int> check(vector<vector<int>>&a,int mid,int r,int c){
+    int val=(1<<c)-1;
+    map<int,pair<int,int>>mpp;
+    for(int i=0;i<r;i++){
+        int temp=0;
+        for(int j=0;j<c;j++){
+            if(a[i][j]<mid)continue;
+            temp=(temp|(1<<j));
+        }
+        if(mpp.find(temp)==mpp.end()){
+            mpp[temp]={1,i+1};
+        }
+        else{
+            mpp[temp].first++;
+        }
+    }
+    for(auto &x:mpp){
+        for(auto &y:mpp){
+            int temp=(x.first|y.first);
+            if(temp==val)return {1,x.second.second,y.second.second};
+        }
+    }
+    return {0,0,0};
 
+}
 
 // ╭──────────────────────────────╮
 // │        SOLVER ZONE           │
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n;
-    cin>>n;
-    vector<int>a(n);
-    cin>>a;
+    int n,m;
+    cin>>n>>m;
+    vector<vector<int>>a(n,vector<int>(m));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cin>>a[i][j];
+        }
+    }
+    int low=0;
+    int high=1e9;
+    int first;
+    int second;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        vector<int>temp=check(a,mid,n,m);
+        if(temp[0]){
+            first=temp[1];
+            second=temp[2];
+            low=mid+1;
+        }
+        else{
+            high=mid-1;
+        }
+    }
+    cout<<first<<" "<<second;
 
 
 
@@ -259,9 +304,7 @@ signed main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     // precomp_fact();  // Enable if using nCr or factorials
     int _=1;
-    cin>>_;
     while(_--){
         solve();
-        cout<<"\n";
     }
 }

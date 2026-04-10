@@ -246,7 +246,61 @@ void solve(){
     int n;
     cin>>n;
     vector<int>a(n);
-    cin>>a;
+    vector<vector<int>>odd;
+    vector<vector<int>>even;
+    int idx=-1;
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+        if(a[i]==1){
+            idx=i;
+        }
+        if(i!=0 && i%2==0){
+            even.push_back({a[i],i});
+        }
+        if(i!=n-1 && i%2==1){
+            odd.push_back({a[i],i});
+        }
+    }
+    bool flag=false;
+    if(idx!=n-1 && idx!=0 && idx%2==1){
+        flag=true;
+    }
+    vector<int>ans(n);
+    if(flag==false){
+        int temp=n;
+        sort(odd.begin(),odd.end());
+        even.push_back({a[0],0});
+        even.push_back({a[n-1],n-1});
+
+        sort(even.begin(),even.end(),greater<vector<int>>());
+        for(int i=0;i<odd.size();i++){
+            ans[odd[i][1]]=temp;
+            temp--;
+        }
+        int temp2=1;
+        for(int i=0;i<even.size();i++){
+            ans[even[i][1]]=temp2;
+            temp2++;
+        }
+    }
+    else{
+        int temp=n;
+        odd.push_back({a[0],0});
+        odd.push_back({a[n-1],n-1});
+        sort(odd.begin(),odd.end(),greater<vector<int>>());
+        sort(even.begin(),even.end());
+        for(int i=0;i<even.size();i++){
+            ans[even[i][1]]=temp;
+            temp--;
+        }
+        int temp2=1;
+        for(int i=0;i<odd.size();i++){
+            ans[odd[i][1]]=temp2;
+            temp2++;
+        }
+    }
+    cout<<ans;
+
 
 
 
