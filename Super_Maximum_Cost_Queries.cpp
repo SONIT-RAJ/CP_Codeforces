@@ -65,7 +65,7 @@ void solve(){
         l--;
         int up=(r>=0)?c[r]:0;
         int down=(l>=0)?c[l]:0;
-        cout<<up-down<<" ";
+        cout<<up-down<<'\n';
     }
 
 
@@ -74,6 +74,7 @@ void solve(){
 
 }
 signed main(){
+    ios::sync_with_stdio(0); cin.tie(0);
     int _=1;
     while(_--){
         solve();
