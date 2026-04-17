@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 10:25:16 16-04-2026
+    created: 14:40:14 17-04-2026
 */
 
 
@@ -235,7 +235,36 @@ struct DSU {
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
 
+pair<bool,int> dfs(vector<int>&a,vector<bool>&v,vector<int>&dp,int i){
+    v[i]=true;
+    int child=a[i];
+    if(dp[child]!=-1){
+        dp[i]=dp[child]+1;
+        return {false,-1};
+    }
+    if(v[child]==false){
+        auto p=dfs(a,v,dp,child);
+        if(p.first==false){
+            dp[i]=dp[child]+1;
+            return {false,-1};
+        }
+        else{
+            if(p.second==i){
+                dp[i]=0;
+                return {false,-1};
+            }
+            else{
+                dp[i]=0;
+                return {true,p.second};
+            }
+        }
+    }
+    else{
+        dp[i]=0;
+        return {true,child};
+    }
 
+}
 
 // ╭──────────────────────────────╮
 // │        SOLVER ZONE           │
@@ -244,47 +273,21 @@ void solve(){
 
     int n;
     cin>>n;
-    vector<vector<int>>dp(n+1,vector<int>(n+1));
+    vector<int>a(n+1);
     for(int i=1;i<=n;i++){
-        for(int j=1;j<=n;j++){
-            cin>>dp[i][j];
-        }
+        cin>>a[i];
     }
-
-    vector<int>d(n);
-    for(int i=0;i<n;i++){
-        cin>>d[i];
-    }
-
-    vector<int>ans;
-    ans.reserve(n);
-
-    reverse(d.begin(),d.end());
-
-    vector<int>temp;
-    temp.reserve(n);
-
-    for(int k=0;k<n;k++){
-        int dis=0;
-        int mid=d[k];
-        temp.push_back(mid);
-        for(int i=1;i<=n;i++){
-            for(int j=1;j<=n;j++){
-                dp[i][j]=min(dp[i][j],dp[i][mid]+dp[mid][j]);
-            }
+    vector<bool>v(n+1,false);
+    vector<int>dp(n+1,-1);
+    int ans=0;
+    for(int i=1;i<=n;i++){
+        if(dp[i]==-1){
+            dfs(a,v,dp,i);
         }
-        int sz=temp.size();
-        for(int i=0;i<sz;i++){
-            for(int j=0;j<sz;j++){
-                int left=temp[i];
-                int right=temp[j];
-                dis+=dp[left][right];
-            }
-        }
-        ans.push_back(dis);
+        ans=max(ans,dp[i]);
     }
-    reverse(ans.begin(),ans.end());
-    cout<<ans;
+    cout<<ans+2;
+
 
 
 
@@ -297,7 +300,9 @@ signed main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     // precomp_fact();  // Enable if using nCr or factorials
     int _=1;
+    cin>>_;
     while(_--){
         solve();
+        cout<<"\n";
     }
 }
