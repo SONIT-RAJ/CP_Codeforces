@@ -1,267 +1,321 @@
-/*
-   Author: SONIT RAJ
-    created: 01:46:20 10-04-2026
-*/
-
-
-#include<bits/stdc++.h>
-#include<ext/pb_ds/assoc_container.hpp>
-#include<ext/pb_ds/tree_policy.hpp>
+#include <iostream>
+#include <algorithm>
+#include <vector>
+#include <map>
+#include <list>
+#include <set>
+#include <queue>
+#include <bits/stdc++.h>
+#define ll long long
+#define int long long
+#define pb push_back
+#define ppb pop_back
+#define mp make_pair
 using namespace std;
-using namespace chrono;
-using namespace __gnu_pbds;
-
-// #pragma GCC target("avx2,bmi,bmi2,lzcnt,popcnt")
-#pragma GCC optimize("Ofast,unroll-loops,O3,no-stack-protector,fast-math")
-#pragma GCC target("avx,avx2,fma,sse4")
-
-// ╭──────────────────────────────╮
-// │         ALIASES ZONE         │
-// ╰──────────────────────────────╯
-using ll = long long;
-using ld = long double;
-using pii = pair<int, int>;
-using pll = pair<ll, ll>;
+using vpi = vector<pair<int, int>>;
+using pi = pair<int, int>;
 using vi = vector<int>;
-using vll = vector<ll>;
-typedef unsigned long long ull;
-typedef long double lld;
-
-// ╭──────────────────────────────╮
-// │         MACROS ZONE          │
-// ╰──────────────────────────────╯
-#define ll                long long
-#define int               long long
-#define eb                emplace_back
-#define mp                make_pair
-#define ff                first
-#define ss                second
-#define pb                push_back
-#define lb                lower_bound
-#define ub                upper_bound
-#define all(x)            x.begin(), x.end()
-#define rall(x)           x.rbegin(),x.rend()
-#define ins               insert
-#define ln                '\n'
-#define endl              "\n"
-#define endlf             "\n" << flush;
-#define yes               cout << "YES\n"
-#define no                cout << "NO\n"
-#define fr(i,n)           for(int i = 0; i < n; ++i)
-#define ppb               pop_back
-#define pf                push_front
-#define ppf               pop_front
-#define getunique(v)      {sort(v.begin(), v.end()); v.erase(unique(v.begin(), v.end()), v.end());}
-#define uniq(v)           (v).erase(unique(all(v)),(v).end())
-#define NP(a)             next_permutation(all(a))
-#define sz(x)             (int)((x).size())
-#define rep(i,a,b)        for(int i=a;i<b;i++)
-#define mem1(a)           memset(a,-1,sizeof(a))
-#define mem0(a)           memset(a,0,sizeof(a))
-#define ppc               __builtin_popcount
-#define ppcll             __builtin_popcountll
-
-// ╭──────────────────────────────╮
-// │         I/O                  │
-// ╰──────────────────────────────╯
-template<typename T1, typename T2> istream& operator>>(istream& in, pair<T1, T2>& p) { return in >> p.first >> p.second; }
-template<typename T1, typename T2> ostream& operator<<(ostream& out, const pair<T1, T2>& p) { return out << "(" << p.first << ", " << p.second << ")"; }
-template<typename T> istream& operator>>(istream& in, vector<T>& v) { for (auto& x : v) in >> x; return in; }
-template<typename T> ostream& operator<<(ostream& out, const vector<T>& v) { for (const auto& x : v) out << x << " "; return out; }
-template<typename T> istream& operator>>(istream& in, vector<vector<T>>& v) { for (auto& row : v) in >> row; return in; }
-template<typename T> ostream& operator<<(ostream& out, const vector<vector<T>>& v) { for (const auto& row : v) out << row << '\n'; return out; }
-
-
-// ╭────────────────────────────────────────────╮
-// │      PBDS/ Ordered Set && Priority Queue   │
-// ╰────────────────────────────────────────────╯
-typedef tree<pair<ll, ll>, null_type, less<pair<ll, ll>>, rb_tree_tag, tree_order_statistics_node_update >pbds; // find_by_order, order_of_key
-template <typename T>
-using os = tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
-template <typename T>
-using oms = tree<T, null_type, less_equal<T>, rb_tree_tag, tree_order_statistics_node_update>;
-template<class T> using pq = priority_queue<T>;
-template<class T> using pqg = priority_queue<T, vector<T>, greater<T>>;
-
-
-// ╭──────────────────────────────╮
-// │         CONSTANTS            │
-// ╰──────────────────────────────╯
-const ll inf = 2e18 + 5;
-const ll ninf = -2e18 - 5;
-const ll mod = 1e9 + 7;
-const ll M=998244353;
-const int MAXN = 2e5 + 5;
-#define PI 3.1415926535897932384626433832795
-
-// ╭──────────────────────────────╮
-// │       DEBUG MACRO ZONE       │
-// ╰──────────────────────────────╯
-#ifndef ONLINE_JUDGE
-#define dbg(...) \
-    do { cerr << "Line(" << __LINE__ << "): " << #__VA_ARGS__ << " = ";  _print(__VA_ARGS__);cerr << endl;} while(0)
-#else
-    #define dbg(...) do {} while(0)
-#endif
-
-void _print(ll t) {cerr << t;}
-void _print(string t) {cerr << t;}
-void _print(char t) {cerr << t;}
-void _print(lld t) {cerr << t;}
-void _print(double t) {cerr << t;}
-void _print(ull t) {cerr << t;}
-
-template <class T, class V> void _print(pair <T, V> p);
-template <class T> void _print(vector <T> v);
-template <class T> void _print(set <T> v);
-template <class T, class V> void _print(map <T, V> v);
-template <class T> void _print(unordered_set <T> v);
-template <class T, class V> void _print(unordered_map <T, V> v);
-template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) {cerr << "{"; _print(p.ff); cerr << ","; _print(p.ss); cerr << "}";}
-template <class T> void _print(vector <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T> void _print(set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T> void _print(unordered_set <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T> void _print(multiset <T> v) {cerr << "[ "; for (T i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T, class V> void _print(map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <class T, class V> void _print(unordered_map <T, V> v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
-void _print(pbds v) {cerr << "[ "; for (auto i : v) {_print(i); cerr << " ";} cerr << "]";}
-template <typename T>
-void _print(const os<T>& v) {
-    cerr << "[ ";
-    for (const auto &it : v) {
-        _print(it);
-        cerr << " ";
-    }
-    cerr << "]";
+using vvi = vector<vector<int>>;
+#define ff first
+#define ss second
+#define all(x) x.begin(), x.end()
+#define sz(x) (int)(x).size()
+const int inf = 9e18;
+const int mod = 1e9 + 7;
+const int NUM = 1000030;
+const int N = 10000000;
+#define DEBUG(x) cerr << #x << ": " << x << '\n'
+template <typename T, typename Y>
+istream &operator>>(istream &is, pair<T, Y> &p)
+{
+    is >> p.first >> p.second;
+    return is;
+}
+template <typename T, typename Y>
+ostream &operator<<(ostream &os, pair<T, Y> p)
+{
+    os << p.first << ' ' << p.second << ' ';
+    return os;
 }
 template <typename T>
-void _print(const oms<T>& v) {
-    cerr << "[ ";
-    for (const auto &it : v) {
-        _print(it);
-        cerr << " ";
-    }
-    cerr << "]";
+istream &operator>>(istream &is, vector<T> &v)
+{
+    for (auto &i : v)
+        is >> i;
+    return is;
 }
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-
-//Bits
-string decToBinary(ll n){string s="";ll i = 0;while (n > 0) {s =to_string(n % 2)+s;n = n / 2;i++;}return s;}
-ll binaryToDecimal(string n){string num = n;ll dec_value = 0;int base = 1;int len = num.length();for(int i = len - 1; i >= 0; i--){if (num[i] == '1')dec_value += base;base = base * 2;}return dec_value;}
-
-//Check
-bool isPrime(ll n){if(n<=1)return false;if(n<=3)return true;if(n%2==0||n%3==0)return false;for(int i=5;i*i<=n;i=i+6)if(n%i==0||n%(i+2)==0)return false;return true;}
-bool isPowerOfTwo(int n){if(n==0)return false;return (ceil(log2(n)) == floor(log2(n)));}
-bool isPerfectSquare(ll x){if (x >= 0) {ll sr = sqrt(x);return (sr * sr == x);}return false;}
-
-// Sieve of Eratosthenes
-vector<int> sieve(int n) {
-    vector<int> primes(n + 1, 1), res;
-    primes[0] = primes[1] = 0;
-    for (int i = 2; i * i <= n; i++) {
-        if (primes[i]) {
-            for (int j = i * i; j <= n; j += i) primes[j] = 0;
+template <typename T>
+ostream &operator<<(ostream &os, vector<T> v)
+{
+    for (auto &i : v)
+        os << i << ' ';
+    return os;
+}
+vector<int> lp, sieve;
+vector<int> pr;
+vector<int> power;
+vector<int> fact;
+void initpow(int x)
+{
+    power.resize(NUM);
+    power[0] = 1;
+    for (int i = 1; i < NUM; i++)
+    {
+        power[i] = (power[i - 1] * (x % mod)) % mod;
+    }
+}
+void initFactorial()
+{
+    fact.resize(NUM);
+    fact[0] = 1;
+    for (int i = 1; i < NUM; i++)
+    {
+        fact[i] = (fact[i - 1] * i) % mod;
+    }
+}
+void calc_sieve()
+{
+    sieve.resize(NUM + 1, 0);
+    for (int x = 2; x <= NUM; x++)
+    {
+        if (sieve[x])
+            continue;
+        for (int u = x; u <= NUM; u += x)
+        {
+            sieve[u] = x;
         }
     }
-    for (int i = 2; i <= n; i++)
-        if (primes[i]) res.pb(i);
-    return res;
 }
-
-// ╭──────────────────────────────╮
-// │      MODULAR ARITHMETIC      │
-// ╰──────────────────────────────╯
-int add(int a, int b) { return (a + b) % mod; }
-int sub(int a, int b) { return (a - b + mod) % mod; }
-int mul(int a, int b) { return (a * b) % mod; }
-ll mod_mul(ll a, ll b, ll m) {a = a % m; b = b % m; return (((a * b) % m) + m) % m;}
-ll expo(ll a, ll b, ll mod) {ll res = 1; while (b > 0) {if (b & 1)res = (res * a) % mod; a = (a * a) % mod; b = b >> 1;} return res;}
-ll power(ll a, ll b, ll m = mod) {
-    ll res = 1;
-    while (b) {
-        if (b & 1) res = res * a % m;
-        a = a * a % m;
+void primefactor()
+{
+    lp.resize(N + 1, 0);
+    for (int i = 2; i <= N; ++i)
+    {
+        if (lp[i] == 0)
+        {
+            lp[i] = i;
+            pr.push_back(i);
+        }
+        for (int j = 0; j < (int)pr.size() && pr[j] <= lp[i] && i * pr[j] <= N; ++j)
+            lp[i * pr[j]] = pr[j];
+    }
+}
+int binpow(int a, int b)
+{
+    int res = 1;
+    while (b > 0)
+    {
+        if (b & 1)
+            res = res * a;
+        a = a * a;
         b >>= 1;
     }
     return res;
 }
-ll mminvprime(ll a, ll b) {return expo(a, b - 2, b);}
-ll mod_inv(ll a, ll m = mod) { return power(a, m - 2, m); }
-ll div(ll a, ll b, ll m) {a = a % m; b = b % m; return (mod_mul(a, mminvprime(b, m), m) + m) % m;}  //only for prime m
-ll getRandomNumber(ll l, ll r) {return uniform_int_distribution<ll>(l, r)(rng);}
-
-// ╭──────────────────────────────╮
-// │        FACTORIAL ZONE        │
-// ╰──────────────────────────────╯
-int fact[MAXN+1], invFact[MAXN+1];
-void precomp_fact() {
-    fact[0] = invFact[0] = 1;
-    for(int i = 1; i <= MAXN; i++){
-        fact[i] = mul(fact[i - 1], i);
-        invFact[i] = mod_inv(fact[i],mod);
+int binpow(int a, int b, int mod)
+{
+    int res = 1;
+    while (b > 0)
+    {
+        if (b & 1)
+            res = (res * a) % mod;
+        a = (a * a) % mod;
+        b >>= 1;
     }
+    return res % mod;
 }
-int nCr(int n, int r) {
-    if (r < 0 || r > n) return 0;
-    return mul(fact[n], mul(invFact[r], invFact[n - r]));
+int gcd(int a, int b)
+{
+    if (b == 0)
+        return a;
+    else
+        return gcd(b, a % b);
 }
+int lcm(int a, int b)
+{
+    return ((a / gcd(a, b)) * b);
+}
+int inversemod(int a, int mod)
+{
+    return binpow(a, mod - 2, mod);
+}
+int divmod(int a, int b, int c)
+{
+    return ((a % c) * inversemod(b, c)) % c;
+}
+int combination(int n, int k)
+{
+    if (k > n)
+        return 0;
+    int p1 = (fact[n] * inversemod(fact[k], mod)) % mod;
+    int p2 = (1 * inversemod(fact[n - k], mod)) % mod;
+    return (p1 * p2) % mod;
+}
+typedef pair<ll, ll> Interval;
+vector<Interval> mergeIntervals(vector<Interval> &intervals)
+{
+    if (intervals.empty())
+        return {};
 
+    // Sort intervals by start time
+    sort(intervals.begin(), intervals.end());
 
-// ╭──────────────────────────────╮
-// │      DISJOINT SET UNION      │
-// ╰──────────────────────────────╯
-struct DSU {
-    vector<int> parent, sz;
-    DSU(int n) {
-        parent.resize(n + 1);
-        sz.assign(n + 1, 1);
-        iota(all(parent), 0);
+    vector<Interval> result;
+    result.push_back(intervals[0]);
+
+    for (size_t i = 1; i < intervals.size(); i++)
+    {
+        auto &last = result.back();
+        if (intervals[i].first <= last.second + 1)
+        {                                                        // Overlapping or adjacent
+            last.second = max(last.second, intervals[i].second); // Merge
+        }
+        else
+        {
+            result.push_back(intervals[i]); // Add new interval
+        }
     }
-    int find(int x) { return x == parent[x] ? x : parent[x] = find(parent[x]); }
-    bool unite(int a, int b) {
-        a = find(a); b = find(b);
-        if (a == b) return false;
-        if (sz[a] < sz[b]) swap(a, b);
-        parent[b] = a;
-        sz[a] += sz[b];
-        sz[b] = sz[a];
-        return true;
-    }
-};
-// ╭──────────────────────────────╮
-// │      GLOBAL ZONE             │
-// ╰──────────────────────────────╯
-// ALWAYS USE cout << fixed << setprecision(value) <<NUMBER; WHILE OUTPUTTING FLOATS
-// const int max_n = 1e7 + 3;
-// int dp[max_n];
 
-
-
-// ╭──────────────────────────────╮
-// │        SOLVER ZONE           │
-// ╰──────────────────────────────╯
-void solve(){
-
-    int n;
-    cin>>n;
-    vector<int>a(n);
-    cin>>a;
-
-
-
-
+    return result;
 }
-// ╭──────────────────────────────╮
-// │             MAIN             │
-// ╰──────────────────────────────╯
-signed main(){
-    ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
-    // precomp_fact();  // Enable if using nCr or factorials
-    int _=1;
-    cin>>_;
-    while(_--){
+vector<Interval> intervalIntersection(vector<Interval> &set1, vector<Interval> &set2)
+{
+    vector<Interval> result;
+    int i = 0, j = 0;
+    sort(all(set1));
+    sort(all(set2));
+    while (i < set1.size() && j < set2.size())
+    {
+        int start = max(set1[i].first, set2[j].first);
+        int end = min(set1[i].second, set2[j].second);
+
+        if (start <= end)
+        {
+            result.push_back({start, end});
+        }
+        if (set1[i].second < set2[j].second)
+            i++;
+        else
+            j++;
+    }
+    return result;
+}
+vector<Interval> valid_range(ll prev, ll curr)
+{
+    // prev ^ x >= curr
+    vector<Interval> result;
+    ll value = 0;
+    for (int i = 30 - 1; i >= 0; i--)
+    {
+        ll currb = 0;
+        ll prevb = 0;
+        if (curr & (1ll << i))
+        {
+            currb = 1;
+        }
+        if (prev & (1ll << i))
+        {
+            prevb = 1;
+        }
+        if (currb)
+        {
+            value = value | ((1 - prevb) * (1ll << i));
+        }
+        else
+        {
+            ll lb = value | ((1 - prevb) * (1ll << i));
+            ll rb = lb;
+            for (int j = i - 1; j >= 0; j--)
+            {
+                rb |= (1ll << j);
+            }
+            result.push_back({lb, rb});
+            value = value | ((prevb) * (1ll << i));
+        }
+    }
+    result.push_back({value, value});
+    return result;
+}
+bool isPresentInIntervals(const vector<Interval> &intervals, int x)
+{
+    int left = 0, right = intervals.size() - 1;
+
+    while (left <= right)
+    {
+        int mid = left + (right - left) / 2;
+
+        if (intervals[mid].first <= x && x <= intervals[mid].second)
+        {
+            return true; // x is inside the interval
+        }
+        else if (intervals[mid].second < x)
+        {
+            left = mid + 1; // Search in the right half
+        }
+        else
+        {
+            right = mid - 1; // Search in the left half
+        }
+    }
+
+    return false; // x is not in any interval
+}
+void solve()
+{
+    ll n, q;
+    cin >> n >> q;
+    vi v(n);
+    cin >> v;
+    reverse(all(v));
+    ll prev = 0;
+    vector<Interval> full = {{0, (1ll << 30) - 1}};
+    vector<vector<Interval>> possible(n);
+    for (ll i = 0; i < n; i++)
+    {
+        vector<Interval> vv = valid_range(prev, v[i]);
+        vector<Interval> ii = mergeIntervals(vv);
+        ii = intervalIntersection(ii, full);
+        full = ii;
+        possible[i] = ii;
+        prev ^= v[i];
+    }
+    auto check = [&](ll d, ll x)
+    {
+        return isPresentInIntervals(possible[d], x);
+    };
+    while (q--)
+    {
+        ll x;
+        cin >> x;
+        ll lo = 0, hi = n, ans = n;
+        while (lo <= hi)
+        {
+            ll mid = (lo + hi) / 2;
+            if (mid == n)
+            {
+                break;
+            }
+            if (check(mid, x))
+            {
+                lo = mid + 1;
+            }
+            else
+            {
+                ans = mid;
+                hi = mid - 1;
+            }
+        }
+        cout << ans << " ";
+    }
+    cout << endl;
+}
+signed main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(0);
+    int t = 1;
+    cin >> t;
+    while (t--)
         solve();
-        cout<<"\n";
-    }
+    return 0;
 }
