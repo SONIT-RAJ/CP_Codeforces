@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 22:59:51 24-04-2026
+    created: 01:28:06 25-04-2026
 */
 
 
@@ -235,59 +235,7 @@ struct DSU {
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
 
-int f(vector<int>&a,vector<pair<char,int>>&b,vector<vector<int>>&dp,int i,int bitmask){
-    if(i>=b.size()){
-        return 0;
-    }
-    if(dp[i][bitmask]!=-1e18)return dp[i][bitmask];
-    int ans=0;
-    int n=a.size();
-    if(b[i].first=='p'){
-        if(b[i].second==1){
-            int temp=LLONG_MIN;
-            for(int j=0;j<min(n,20ll);j++){
-                if((bitmask&(1ll<<j))!=0){
-                    int new_bitmask=(bitmask & ~(1ll << j));
-                    temp=max(temp,a[j]+f(a,b,dp,i+1,new_bitmask));
-                }
-            }
-            ans=temp;
-        }
-        else{
-            int temp=LLONG_MAX;
-            for(int j=0;j<min(n,20ll);j++){
-                if((bitmask&(1ll<<j))!=0){
-                    int new_bitmask=(bitmask & ~(1ll << j));
-                    temp=min(temp,-a[j]+f(a,b,dp,i+1,new_bitmask));
-                }
-            }
-            ans=temp;
-        }
-    }
-    else{
-        if(b[i].second==1){
-            int temp=LLONG_MIN;
-            for(int j=0;j<min(n,20ll);j++){
-                if((bitmask&(1ll<<j))!=0){
-                    int new_bitmask=(bitmask & ~(1ll << j));
-                    temp=max(temp,f(a,b,dp,i+1,new_bitmask));
-                }
-            }
-            ans=temp;
-        }
-        else{
-            int temp=LLONG_MAX;
-            for(int j=0;j<min(n,20ll);j++){
-                if((bitmask&(1ll<<j))!=0){
-                    int new_bitmask=(bitmask & ~(1ll << j));
-                    temp=min(temp,f(a,b,dp,i+1,new_bitmask));
-                }
-            }
-            ans=temp;
-        }
-    }
-    return dp[i][bitmask]=ans;
-}
+
 
 // ╭──────────────────────────────╮
 // │        SOLVER ZONE           │
@@ -296,18 +244,8 @@ void solve(){
 
     int n;
     cin>>n;
-    vector<int>a(n);
+    vector<int>a(n+1);
     cin>>a;
-    sort(a.begin(),a.end(),greater<int>());
-    int m;
-    cin>>m;
-    vector<pair<char,int>>b(m);
-    for(int i=0;i<m;i++){
-        cin>>b[i].first>>b[i].second;
-    }
-    vector<vector<int>>dp(m,vector<int>(1ll<<min(n,20ll),-1e18));
-    cout<<f(a,b,dp,0,(1ll<<min(n,20ll))-1);
-
 
 
 
