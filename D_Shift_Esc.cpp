@@ -25,9 +25,41 @@ const ll M = 1e9 + 7;
 
 void solve(){
 
-    int n,m,k;
-    cin>>n>>m>>k;
-
+    int n,m,t;
+    cin>>n>>m>>t;
+    vector<vector<int>>a(n,vector<int>(m));
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            cin>>a[i][j];
+        }
+    }
+    vector<vector<vector<int>>>dp(n,vector<vector<int>>(m,vector<int>(m)));
+    vector<vector<int>>p(n,vector<int>(m));
+    int ans=LLONG_MAX;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<m;j++){
+            p[i][j]=LLONG_MAX;
+            for(int k=0;k<m;k++){
+                if(i==0 && j==0){
+                    dp[i][j][k]=t*k+a[i][(j+k)%m];
+                }
+                else if(i==0){
+                    dp[i][j][k]=a[i][(j+k)%m]+dp[i][j-1][k];
+                }
+                else if(j==0){
+                    dp[i][j][k]=t*k+a[i][(j+k)%m]+p[i-1][j];
+                }
+                else{
+                    dp[i][j][k]=min(dp[i][j-1][k],p[i-1][j]+t*k)+a[i][(j+k)%m];
+                }
+                p[i][j]=min(p[i][j],dp[i][j][k]);
+                if(i==n-1 && j==m-1){
+                    ans=min(ans,dp[i][j][k]);
+                }
+            }
+        }
+    }
+    cout<<ans;
 
 
 
