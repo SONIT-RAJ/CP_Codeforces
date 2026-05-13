@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 11:38:22 13-05-2026
+    created: 19:26:25 13-05-2026
 */
 
 
@@ -235,7 +235,13 @@ struct DSU {
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
 
-
+bool check(vector<int>&a,int n,int mid){
+    int val=a[n-1];
+    for(int i=n-2;i>=0;i--){
+        val=max(val+1,a[i]);
+    }
+    return val<=mid;
+}
 
 // ╭──────────────────────────────╮
 // │        SOLVER ZONE           │
@@ -245,24 +251,20 @@ void solve(){
     int n;
     cin>>n;
     vector<int>a(n);
-    cin>>a;
-    int ans=0;
-    for(int i=0;i<n;i+=2){
-        int c=0;
-        int mini=0;
-        for(int j=i+1;j<n;j++){
-            if(j%2==0){
-                c+=a[j];
-            }
-            else{
-                int l=max(1ll,-mini);
-                int r=min(a[i],a[j]-c);
-                if(l<=r)ans+=r-l+1;
-                c-=a[j];
-                mini=min(mini,c);
-                if(a[i]+mini<0)break;
-            }
-
+    for(int i=0;i<n;i++){
+        cin>>a[i];
+    }
+    int low=0;
+    int high=1e12;
+    int ans=high;
+    while(low<=high){
+        int mid=low+(high-low)/2;
+        if(check(a,n,mid)){
+            ans=mid;
+            high=mid-1;
+        }
+        else{
+            low=mid+1;
         }
     }
     cout<<ans;
@@ -277,7 +279,9 @@ signed main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     // precomp_fact();  // Enable if using nCr or factorials
     int _=1;
+    cin>>_;
     while(_--){
         solve();
+        cout<<"\n";
     }
 }

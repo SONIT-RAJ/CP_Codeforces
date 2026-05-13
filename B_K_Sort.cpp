@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 11:38:22 13-05-2026
+    created: 19:17:18 13-05-2026
 */
 
 
@@ -246,27 +246,16 @@ void solve(){
     cin>>n;
     vector<int>a(n);
     cin>>a;
-    int ans=0;
-    for(int i=0;i<n;i+=2){
-        int c=0;
-        int mini=0;
-        for(int j=i+1;j<n;j++){
-            if(j%2==0){
-                c+=a[j];
-            }
-            else{
-                int l=max(1ll,-mini);
-                int r=min(a[i],a[j]-c);
-                if(l<=r)ans+=r-l+1;
-                c-=a[j];
-                mini=min(mini,c);
-                if(a[i]+mini<0)break;
-            }
-
-        }
+    int maxi=0;
+    int sum=0;
+    int p=a[0];
+    for(int i=1;i<n;i++){
+        int temp=max(0ll,p-a[i]);
+        sum+=temp;
+        maxi=max(maxi,temp);
+        p=max(p,a[i]);
     }
-    cout<<ans;
-
+    cout<<sum+maxi;
 
 
 }
@@ -277,7 +266,9 @@ signed main(){
     ios_base::sync_with_stdio(0);cin.tie(0);cout.tie(0);
     // precomp_fact();  // Enable if using nCr or factorials
     int _=1;
+    cin>>_;
     while(_--){
         solve();
+        cout<<"\n";
     }
 }
