@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 19:07:19 28-05-2026
+    created: 11:51:50 29-05-2026
 */
 
 
@@ -235,52 +235,63 @@ struct DSU {
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
 
-int q1(int i,int j){
-    int r;
-    cout<<"or "<<i<<" "<<j<<endlf;
-    cin>>r;
-    return r;
-}
-int q2(int i,int j){
-    int r;
-    cout<<"and "<<i<<" "<<j<<endlf;
-    cin>>r;
-    return r;
-}
+
 
 // ╭──────────────────────────────╮
 // │        SOLVER ZONE           │
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n,k;
-    cin>>n>>k;
-    vector<int>a;
-    a.reserve(n);
-    int aorb=q1(1,2);
-    int aandb=q2(1,2);
-    int aplusb=aorb+aandb;
-    int aorc=q1(1,3);
-    int aandc=q2(1,3);
-    int aplusc=aorc+aandc;
-    int borc=q1(2,3);
-    int bandc=q2(2,3);
-    int bplusc=borc+bandc;
-    int aa=(aplusb-bplusc+aplusc)/2;
-    int bb=aplusb-aa;
-    int cc=aplusc-aa;
-    a.push_back(aa);
-    a.push_back(bb);
-    a.push_back(cc);
-    for(int i=4;i<=n;i++){
-        int orr=q1(1,i);
-        int andd=q2(1,i);
-        int sum=orr+andd;
-        a.push_back(sum-aa);
+    int r,c,k;
+    cin>>r>>c>>k;
+    vector<vector<int>>a(r,vector<int>(c));
+    cin>>a;
+    vector<int>p(k,0);
+    vector<vector<vector<vector<int>>>>dp(r,vector<vector<vector<int>>>(c,vector<vector<int>>(k,vector<int>((c+2)/2,0))));
+    for(int i=0;i<r;i++){
+        for(int j=0;j<c;j++){
+            for(int rem=0;rem<k;rem++){
+                for(int cnt=0;cnt<min(j+2,(c+2)/2);cnt++){
+                    if(j>0){
+                        int val=(rem-(a[i][j]%k)+k)%k;
+                        dp[i][j][rem][cnt]=dp[i][j-1][rem][cnt];
+                        int second=0;
+                        if(cnt>0){
+                            if(dp[i][j-1][val][cnt-1]>0){
+                                second=a[i][j]+dp[i][j-1][val][cnt-1];
+                            }
+                            else if(a[i][j]%k==rem){
+                                second=a[i][j];
+                            }
+                        }
+                        dp[i][j][rem][cnt]=max(dp[i][j][rem][cnt],second);
+                    }
+                    else{
+                        int val=(rem-(a[i][j]%k)+k)%k;
+                        dp[i][j][rem][cnt]=p[rem];
+                        int second=0;
+                        if(cnt>0){
+                            if(p[val]>0){
+                                second=a[i][j]+p[val];
+                            }
+                            else if(a[i][j]%k==rem){
+                                second=a[i][j];
+                            }
+                        }
+                        dp[i][j][rem][cnt]=max(dp[i][j][rem][cnt],second);
+                    }
+                }
+            }
+        }
+        for(int j=0;j<c;j++){
+            for(int rem=0;rem<k;rem++){
+                for(int cnt=0;cnt<min(j+2,(c+2)/2);cnt++){
+                    p[rem]=max(p[rem],dp[i][j][rem][cnt]);
+                }
+            }
+        }
     }
-
-    sort(a.begin(),a.end());
-    cout<<"finish "<<a[k-1]<<endlf;
+    cout<<p[0];
 
 
 
