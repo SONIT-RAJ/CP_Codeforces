@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 21:59:29 16-06-2026
+    created: 10:43:27 17-06-2026
 */
 
 
@@ -235,7 +235,12 @@ struct DSU {
 // const int max_n = 1e7 + 3;
 // int dp[max_n];
 
-
+int q(char a,int d){
+    int r;
+    cout<<"? "<<a<<" "<<d<<endlf;
+    cin>>r;
+    return r;
+}
 
 // ╭──────────────────────────────╮
 // │        SOLVER ZONE           │
@@ -244,34 +249,28 @@ void solve(){
 
     int n;
     cin>>n;
-    string s;
-    cin>>s;
-    vector<int>a;
-    a.reserve(n+1);
-    a.push_back(0);
-    int c0=0;
-    int c1=0;
+    vector<vector<int>>a(n,vector<int>(2));
+    int bottomRight=4e18;
+    int topRight=LLONG_MIN;
     for(int i=0;i<n;i++){
-        if(s[i]=='0'){
-            c0++;
-        }
-        else{
-            c1++;
-        }
-        a.push_back(c0-c1);
+        cin>>a[i][0]>>a[i][1];
+        bottomRight=min(bottomRight,a[i][1]-a[i][0]);
+        topRight=max(topRight,a[i][0]+a[i][1]);
     }
-    sort(a.begin(),a.end());
-    int ans=(n*(n+1)*(n+2))/6;// sum of length of all substring of string s
-    // int temp=0;
-    // for(int i=1;i<=n;i++){
-    //     temp+=i*(n-i+1);// number of len k substring in a string of length n will be (n-k+1)
-    // }
-    // ans=temp;
-    for(int i=0;i<=n;i++){
-        int val=a[i]*(i-(n-i));
-        ans+=val;
-    }
-    cout<<ans/2;
+    int xmy=q('R',1e9)-bottomRight-4e9;
+    xmy=q('R',1e9)-bottomRight-4e9;
+    xmy=q('D',1e9)-bottomRight-4e9;
+    xmy=q('D',1e9)-bottomRight-4e9;
+
+    int xpy=q('U',1e9)+topRight-4e9;
+    xpy=q('U',1e9)+topRight-4e9;
+    xpy=q('U',1e9)+topRight-4e9;
+    xpy=q('U',1e9)+topRight-4e9;
+
+    int x=(xpy+xmy)/2;
+    int y=(xpy-xmy)/2;
+    cout<<"! "<<x<<" "<<y<<endlf;
+
 
 
 
@@ -290,7 +289,3 @@ signed main(){
         cout<<"\n";
     }
 }
-
-// max(a,b) = (a+b+abs(a-b))/2;
-// max(c0,c1) = (c0+c1+abs(c0-c1))/2; = (len+abs(c0-c1))/2;
-// p[i]=c0-c1   from l to r we want abs(c0-c1)   by doing p[r]-p[l]
