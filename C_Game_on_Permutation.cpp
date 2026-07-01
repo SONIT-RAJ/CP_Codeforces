@@ -1,6 +1,6 @@
 /*
    Author: SONIT RAJ
-    created: 20:42:30 29-06-2026
+    created: 20:47:39 25-06-2026
 */
 
 
@@ -242,79 +242,23 @@ struct DSU {
 // ╰──────────────────────────────╯
 void solve(){
 
-    int n,m;
-    cin>>n>>m;
-    vector<set<int>>a(n+1);
-    for(int i=0;i<m;i++){
-        int u,v;
-        cin>>u>>v;
-        a[u].insert(v);
-        a[v].insert(u);
-    }
-    vector<vector<int>>ans;
-    ans.reserve(2*max(n,m));
-    queue<int> q;
-    for(int i = 1; i <= n; i++) {
-        if(a[i].size() >= 2) q.push(i);
-    }
-    while(!q.empty()) {
-        int i = q.front();
-        q.pop();
-        if(a[i].size() <= 1) continue;
-        int v = *a[i].begin(); a[i].erase(v); a[v].erase(i);
-        int w = *a[i].begin(); a[i].erase(w); a[w].erase(i);
-        ans.push_back({i, v, w});
-        if(a[v].count(w)) {
-            a[v].erase(w);
-            a[w].erase(v);
+    int n;
+    cin>>n;
+    vector<int>a(n);
+    cin>>a;
+    os<int>s;
+    os<int>s2;
+    int ans=0;
+    for(int i=0;i<n;i++){
+        int val=s.order_of_key(a[i]);
+        int val2=s2.order_of_key(a[i]);
+        if(val<=0 && val2>0){
+            ans++;
+            s.insert(a[i]);
         }
-        else{
-            a[v].insert(w);
-            a[w].insert(v);
-        }
-        if(a[v].size() >= 2) q.push(v);
-        if(a[w].size() >= 2) q.push(w);
-        if(a[i].size() >= 2) q.push(i);
+        s2.insert(a[i]);
     }
-    bool flag=true;
-    int u,v;
-    for(int i=1;i<=n;i++){
-        if(a[i].size()==0)continue;
-        u=i;
-        v=*a[i].begin();
-        flag=false;
-        break;
-    }
-    if(flag==true){
-        int sz=ans.size();
-        cout<<sz<<endl;
-        for(int i=0;i<sz;i++){
-            cout<<ans[i][0]<<" "<<ans[i][1]<<" "<<ans[i][2]<<endl;
-        }
-        return;
-    }
-    DSU d(n);
-    for(auto &x:a[u]){
-        d.unite(u,x);
-    }
-    int par=d.find(u);
-    for(int i=1;i<=n;i++){
-        int p=d.find(i);
-        if(p==par)continue;
-        ans.push_back({u,v,i});
-        for(auto &x:a[i]){
-            d.unite(u,x);
-        }
-        v=i;
-        par=d.find(u);
-    }
-
-    int sz=ans.size();
-    cout<<sz<<endl;
-    for(int i=0;i<sz;i++){
-        cout<<ans[i][0]<<" "<<ans[i][1]<<" "<<ans[i][2]<<endl;
-    }
-
+    cout<<ans;
 
 
 
@@ -330,5 +274,6 @@ signed main(){
     cin>>_;
     while(_--){
         solve();
+        cout<<"\n";
     }
 }
